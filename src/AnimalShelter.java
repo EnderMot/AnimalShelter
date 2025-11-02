@@ -3,8 +3,6 @@ import People.Client;
 import People.Employee;
 import People.Person;
 import People.Volunteer;
-
-import javax.lang.model.type.NullType;
 import java.util.ArrayList;
 
 /**
