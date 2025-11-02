@@ -1,3 +1,5 @@
+package People;
+
 public class Volunteer extends Person{
     String howIsHelping;
 

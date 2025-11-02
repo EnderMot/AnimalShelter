@@ -1,5 +1,7 @@
+package Enums;
+
 /**
- * Enum ServiceType.
+ * Enum Enums.ServiceType.
  * Służy do zdefiniowania stałego zestawu możliwych usług opiekuńczych 
  * świadczonych w schronisku.
  */

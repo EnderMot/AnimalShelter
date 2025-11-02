@@ -1,15 +1,19 @@
+package Animals;
+
 import java.util.ArrayList;
+import Enums.Traits;
+import People.Client;
 
 /**
-* Klasa Animal
+* Klasa Animals.Animal
 * Klasa abstrakcyjna mająca na celu być klasą po której będą dziedziczyć klasy gatunków zwierząt
 */
 public abstract class Animal {
 
-    //Pole statyczne, zawierające ostatnie ID które zostało przypisane do ostatniego stworzonego obiektu klasy Animal
+    //Pole statyczne, zawierające ostatnie ID które zostało przypisane do ostatniego stworzonego obiektu klasy Animals.Animal
     private static int lastId;
 
-    //Pole typu final, nie może zostać nigdy zmienione, jest to unikalne ID przypisane do obiektu klasy Animal
+    //Pole typu final, nie może zostać nigdy zmienione, jest to unikalne ID przypisane do obiektu klasy Animals.Animal
     private final int id;
 
     //Pole age, zawiera wiek zwierzęcia
@@ -29,7 +33,7 @@ public abstract class Animal {
 
 
     /**
-    * Konstruktor klasy Animal
+    * Konstruktor klasy Animals.Animal
     * Wymaga podania name, age oraz trait, przypisuje podane dane do odpowiednich pól
     **/
     Animal(String name, int age, Traits trait){

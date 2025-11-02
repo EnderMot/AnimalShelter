@@ -1,10 +1,13 @@
+package Animals;
+import Enums.Traits;
+
 /**
- * Klasa Hamster dziedzicząca po Animal
+ * Klasa Animals.Hamster dziedzicząca po Animals.Animal
  */
 public class Hamster extends Animal{
 
     /**
-     * Konstruktor klasy Hamster, wymaga podania danych do kalsy Animal
+     * Konstruktor klasy Animals.Hamster, wymaga podania danych do kalsy Animals.Animal
      * */
     Hamster(String name, int age, Traits trait){
         super(name, age, trait);
