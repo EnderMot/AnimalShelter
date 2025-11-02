@@ -3,15 +3,29 @@ import java.util.ArrayList;
 /**
 * Klasa Animal
 * Klasa abstrakcyjna mająca na celu być klasą po której będą dziedziczyć klasy gatunków zwierząt
-**/
+*/
 public abstract class Animal {
-    private static int lastId; //Pole statyczne, zawierające ostatnie ID które zostało przypisane do ostatniego stworzonego obiektu klasy Animal
-    private final int id; //Pole typu final, nie może zostać nigdy zmienione, jest to unikalne ID przypisane do obiektu klasy Animal
-    private int age; //Pole age, zawiera wiek zwierzęcia
-    private String name; //Pole name, zawiera imię zwierzęcia
-    private ArrayList<String> pastNames = new ArrayList<String>(); //Lista String, jest to lista zawierająca historię imion zwierzęcia
-    private Traits trait; //Pole trait, zawiera jeden trait zwierzęcia
-    private Client adoptedBy; //Pole adoptedBy, zawiera informację przez kogo jest adoptowane dane zwierze
+
+    //Pole statyczne, zawierające ostatnie ID które zostało przypisane do ostatniego stworzonego obiektu klasy Animal
+    private static int lastId;
+
+    //Pole typu final, nie może zostać nigdy zmienione, jest to unikalne ID przypisane do obiektu klasy Animal
+    private final int id;
+
+    //Pole age, zawiera wiek zwierzęcia
+    private int age;
+
+    //Pole name, zawiera imię zwierzęcia
+    private String name;
+
+    //Lista String, jest to lista zawierająca historię imion zwierzęcia
+    private ArrayList<String> pastNames = new ArrayList<String>();
+
+    //Pole trait, zawiera jeden trait zwierzęcia
+    private Traits trait;
+
+    //Pole adoptedBy, zawiera informację przez kogo jest adoptowane dane zwierze
+    private Client adoptedBy;
 
 
     /**
@@ -62,7 +76,7 @@ public abstract class Animal {
         this.trait = trait;
     }
 
-    //Metoda dodająca podane imię do historii imion o ile dane imie już w niej nie jest
+    //Metoda dodająca podane imię do historii imion o ile dane imie nie jest w niej obecne
     void addPastName(String name) {
         if (!this.pastNames.contains(name)) {
             this.getPastNames().add(name);
