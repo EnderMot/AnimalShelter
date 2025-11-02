@@ -1,8 +1,10 @@
+package People;
+
 public class Employee extends Person{
     private double salary;
 
     public Employee(String name, String surname, int age, double salary) {
-        super(name, surname, age); // korzystanie z kontruktora klasy Person:)
+        super(name, surname, age); // korzystanie z kontruktora klasy People.Person:)
         this.salary = salary;
     }
 

@@ -1,3 +1,5 @@
+package Enums;
+
 /**
  * Enum zawierający checy zwierząt
  * */

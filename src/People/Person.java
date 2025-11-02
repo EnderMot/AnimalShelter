@@ -1,4 +1,6 @@
-public abstract class Person { // klasa abstrakcyjna Person
+package People;
+
+public abstract class Person { // klasa abstrakcyjna People.Person
     private static int lastId;
     private final int id; //?
     private String name;

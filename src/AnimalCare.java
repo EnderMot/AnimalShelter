@@ -1,3 +1,6 @@
+import Enums.ServiceType;
+import People.Person;
+
 import java.time.LocalDate;
 
 /**
@@ -15,16 +18,16 @@ public class AnimalCare {
     // Przechowuje datę wykonania usługi (użycie Java Time API).
     private LocalDate serviceDate;
 
-    // Wymaganie: Przygotowanie do Upcastingu. Przechowuje osobę (Employee lub Volunteer), 
-    // która wykonała usługę, jako typ nadrzędny Person.
+    // Wymaganie: Przygotowanie do Upcastingu. Przechowuje osobę (People.Employee lub People.Volunteer),
+    // która wykonała usługę, jako typ nadrzędny People.Person.
     private Person whoPerformed;
 
     /**
      * Konstruktor klasy AnimalCare.
      * Inicjalizuje rekord opieki.
-     * @param serviceType Typ wykonanej usługi (z enum ServiceType).
+     * @param serviceType Typ wykonanej usługi (z enum Enums.ServiceType).
      * @param serviceDate Data wykonania usługi.
-     * @param whoPerformed Obiekt Person (pracownik lub wolontariusz) wykonujący usługę.
+     * @param whoPerformed Obiekt People.Person (pracownik lub wolontariusz) wykonujący usługę.
      */
     public AnimalCare(ServiceType serviceType, LocalDate serviceDate, Person whoPerformed) {
         this.serviceType = serviceType;
@@ -45,7 +48,7 @@ public class AnimalCare {
     @Override
     public String toString() {
         // Sprawdzenie, czy osoba wykonująca istnieje, aby uniknąć NullPointerException.
-        // Zakładamy, że klasa Person ma metody getName() i getId().
+        // Zakładamy, że klasa People.Person ma metody getName() i getId().
         String performerInfo = (whoPerformed != null)
                 ? whoPerformed.getName() + " (ID: " + whoPerformed.getId() + ")"
                 : "Nieznany/a";
@@ -61,7 +64,7 @@ public class AnimalCare {
 
     /**
      * Zwraca typ wykonanej usługi.
-     * @return Typ usługi (enum ServiceType).
+     * @return Typ usługi (enum Enums.ServiceType).
      */
     public ServiceType getServiceType() {
         return serviceType;
@@ -77,7 +80,7 @@ public class AnimalCare {
 
     /**
      * Zwraca obiekt osoby, która wykonała usługę.
-     * @return Osoba wykonująca (obiekt Person).
+     * @return Osoba wykonująca (obiekt People.Person).
      */
     public Person getWhoPerformed() {
         return whoPerformed;

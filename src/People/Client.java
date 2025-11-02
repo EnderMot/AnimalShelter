@@ -1,3 +1,5 @@
+package People;
+import Animals.Animal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -25,4 +27,4 @@ public class Client extends Person{
     }
 }
 
-// zrobić metodę Adoption tutaj i potem dodać powiązanie do klasy Animal "adoptedBy"
+// zrobić metodę Adoption tutaj i potem dodać powiązanie do klasy Animals.Animal "adoptedBy"

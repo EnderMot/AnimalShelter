@@ -1,10 +1,13 @@
+package Animals;
+import Enums.Traits;
+
 /**
- * Klasa Dog dziedzicząca po Animal
+ * Klasa Animals.Dog dziedzicząca po Animals.Animal
  */
 public class Dog extends Animal{
 
     /**
-     * Konstruktor klasy Dog, wymaga podania danych do kalsy Animal
+     * Konstruktor klasy Animals.Dog, wymaga podania danych do kalsy Animals.Animal
      * */
     Dog(String name, int age, Traits trait){
         super(name, age, trait);

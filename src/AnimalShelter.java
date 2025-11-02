@@ -1,4 +1,6 @@
-import java.util.Arrays;
+import Animals.Animal;
+import People.Employee;
+import People.Volunteer;
 
 /**
  * Klasa AnimalShelter.
@@ -10,13 +12,13 @@ public class AnimalShelter {
     // POLA KLASY (Wymaganie: Hermetyzacja - wszystkie są prywatne)
 
     // Wymaganie: Tablica 1/3. Przechowuje zwierzęta w schronisku.
-    // Daje możliwość Upcastingu (np. Dog, Cat są przechowywane jako Animal).
+    // Daje możliwość Upcastingu (np. Animals.Dog, Animals.Cat są przechowywane jako Animals.Animal).
     private Animal[] animals;
 
-    // Wymaganie: Tablica 2/3. Przechowuje pracowników (dziedziczą po Person).
+    // Wymaganie: Tablica 2/3. Przechowuje pracowników (dziedziczą po People.Person).
     private Employee[] employees;
 
-    // Wymaganie: Tablica 3/3. Przechowuje wolontariuszy (dziedziczą po Person).
+    // Wymaganie: Tablica 3/3. Przechowuje wolontariuszy (dziedziczą po People.Person).
     private Volunteer[] volunteers;
 
     // Licznik przechowujący aktualną liczbę zwierząt. Potrzebny do zarządzania tablicą (indeksowanie).
@@ -45,13 +47,13 @@ public class AnimalShelter {
     /**
      * Dodaje nowe zwierzę do tablicy. Implementuje logikę sprawdzania pojemności.
      * Wymaganie: Metoda z funkcjonalnością (niepusta) oraz wywoływana min. 1 raz.
-     * * @param newAnimal Obiekt zwierzęcia do dodania (może być Dog, Cat, Fox, Hamster).
+     * * @param newAnimal Obiekt zwierzęcia do dodania (może być Animals.Dog, Animals.Cat, Animals.Fox, Animals.Hamster).
      * @throws ShelterFullException Rzucany, gdy schronisko jest pełne.
      */
     public void addAnimal(Animal newAnimal) throws ShelterFullException {
         // Sprawdzenie, czy jest wolne miejsce
         if (animalCount < animals.length) {
-            // Przypisanie obiektu (np. Dog) do tablicy Animal[] - jest to Upcasting.
+            // Przypisanie obiektu (np. Animals.Dog) do tablicy Animals.Animal[] - jest to Upcasting.
             this.animals[animalCount] = newAnimal;
             animalCount++;
 
@@ -62,7 +64,7 @@ public class AnimalShelter {
             System.out.println("Dodano zwierzę: " + newAnimal.getName() + " (ID: " + newAnimal.getId() + ") do schroniska.");
         } else {
             // Wymaganie: Rzucenie zdefiniowanego wyjątku użytkownika
-            throw new ShelterFullException("Schronisko jest pełne! Nie można przyjąć zwierząt.")
+            throw new ShelterFullException("Schronisko jest pełne! Nie można przyjąć zwierząt.");
         }
     }
 
