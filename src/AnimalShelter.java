@@ -4,6 +4,7 @@ import People.Employee;
 import People.Person;
 import People.Volunteer;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Klasa AnimalShelter.
@@ -78,6 +79,7 @@ public class AnimalShelter {
         return animalCount;
     }
 
+
     // ... (Gettery dla employees i volunteers powinny być dodane dla kompletności hermetyzacji) ...
     // Dodajmy tutaj metody pozwalające pobrać/działać z pracownikami, wolontariuszami i klientami schroniska
 
@@ -106,7 +108,7 @@ public class AnimalShelter {
     }
 
     public Client getClient(int clientId){
-        return (Client) getPersonFromTable(clientId, (Person[]) this.clients.toArray());
+        return (Client) getPersonFromTable(clientId, this.clients.toArray(new Person[clients.size()]));
     }
 
     //Metoda pobrania jednej osoby z odpowiednim id z tablicy typu Person
