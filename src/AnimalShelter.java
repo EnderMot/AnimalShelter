@@ -4,7 +4,6 @@ import People.Employee;
 import People.Person;
 import People.Volunteer;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Klasa AnimalShelter.
