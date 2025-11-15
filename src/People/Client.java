@@ -1,29 +1,22 @@
 package People;
 import Animals.Animal;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 
 public class Client extends Person{
-    private LocalDate dateOfAdoption;
-    ArrayList<Animal> adoptedAnimal;
+    ArrayList<Animal> adoptedAnimals = new ArrayList<>();
 
-    public Client(String name, String surname, int age, LocalDate dateOfAdoption) { // konstruktor, który tworzy nowy obiekt i pozwala na ustawienie jego wartości początkowych
+    public Client(String name, String surname, int age) { // konstruktor, który tworzy nowy obiekt i pozwala na ustawienie jego wartości początkowych
         super(name, surname, age);
-        this.dateOfAdoption = dateOfAdoption;
-        this.adoptedAnimal = new ArrayList<>();
     }
 
 // gettery i settery
-    public LocalDate getDateOfAdoption() {
-        return dateOfAdoption;
+    public ArrayList<Animal> getAdoptedAnimals() {
+        return adoptedAnimals;
     }
 
-    public void setDateOfAdoption (LocalDate dateOfAdoption) {
-        this.dateOfAdoption = dateOfAdoption;
-    }
-
-    public ArrayList<Animal> getAdoptedAnimal() {
-        return adoptedAnimal;
+    public void addAdoptedAnimal(Animal animal){
+        adoptedAnimals.add(animal);
     }
 }
 

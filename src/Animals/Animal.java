@@ -1,5 +1,6 @@
 package Animals;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import Enums.Traits;
 import People.Client;
@@ -30,6 +31,7 @@ public abstract class Animal {
 
     //Pole adoptedBy, zawiera informację przez kogo jest adoptowane dane zwierze
     private Client adoptedBy;
+    private LocalDate dateOfAdoption;
 
 
     /**
@@ -41,6 +43,7 @@ public abstract class Animal {
         this.name = name;
         this.trait = trait;
         this.id = lastId+=1;
+        this.adoptedBy = null;
     }
 
     //Metoda przeliczająca wiek zwierzęcia na wiek ludzki, do implementacji w klasach dziedziczących
@@ -85,5 +88,22 @@ public abstract class Animal {
         if (!this.pastNames.contains(name)) {
             this.getPastNames().add(name);
         }
+    }
+
+    //Metoda ustawiająca zmienne adoptedBy oraz dateOfAdoption, ustawienie ich oznacza że zwierzę zostało zaadoptowane
+    public void adoption(Client client, LocalDate date){
+        this.adoptedBy = client;
+        this.dateOfAdoption = date;
+    }
+
+    //Metoda ustawiająca zmienne adoptedBy oraz dateOfAdoption na null, ustawienie ich na null oznacza że zwierzę zostało oddane do schorniska
+    public void returnToShelter(){
+        this.adoptedBy = null;
+        this.dateOfAdoption = null;
+    }
+
+    //Metoda sprawdzająca czy zwierzak jest zadaptowany
+    public boolean isAdopted(){
+        return adoptedBy != null;
     }
 }

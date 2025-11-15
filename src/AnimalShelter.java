@@ -1,6 +1,9 @@
 import Animals.Animal;
+import People.Client;
 import People.Employee;
+import People.Person;
 import People.Volunteer;
+import java.util.ArrayList;
 
 /**
  * Klasa AnimalShelter.
@@ -10,39 +13,28 @@ import People.Volunteer;
 public class AnimalShelter {
 
     // POLA KLASY (Wymaganie: Hermetyzacja - wszystkie są prywatne)
+    // Oraz ustalenie maksymalnych rozmiarów tablic zgodnie z projektem
 
     // Wymaganie: Tablica 1/3. Przechowuje zwierzęta w schronisku.
     // Daje możliwość Upcastingu (np. Animals.Dog, Animals.Cat są przechowywane jako Animals.Animal).
-    private Animal[] animals;
+    private Animal[] animals = new Animal[10];
 
     // Wymaganie: Tablica 2/3. Przechowuje pracowników (dziedziczą po People.Person).
-    private Employee[] employees;
+    private Employee[] employees = new Employee[6];
 
     // Wymaganie: Tablica 3/3. Przechowuje wolontariuszy (dziedziczą po People.Person).
-    private Volunteer[] volunteers;
+    private Volunteer[] volunteers = new Volunteer[4];
+
+    //Przechowuje dynamiczą listę klientów schroniska
+    private ArrayList<Client> clients = new ArrayList<Client>();
 
     // Licznik przechowujący aktualną liczbę zwierząt. Potrzebny do zarządzania tablicą (indeksowanie).
-    private int animalCount;
+    private int animalCount = 0;
 
     // Wymaganie: Pole statyczne (jedno z dwóch). Liczy całkowitą liczbę zwierząt,
     // które kiedykolwiek trafiły do systemu (globalna statystyka).
     private static int totalAnimalsFound = 0;
 
-    /**
-     * Konstruktor klasy AnimalShelter.
-     * Inicjalizuje tablice i ustala ich stałe maksymalne rozmiary.
-     */
-    public AnimalShelter() {
-        // Ustalenie maksymalnych rozmiarów tablic zgodnie z projektem
-        this.animals = new Animal[10];
-        this.employees = new Employee[6];
-        this.volunteers = new Volunteer[4];
-
-        this.animalCount = 0;
-
-        // Wymaganie: Komunikat ułatwiający interakcję
-        System.out.println("Schronisko zostało utworzone. Max. pojemność: 10 zwierząt.");
-    }
 
     /**
      * Dodaje nowe zwierzę do tablicy. Implementuje logikę sprawdzania pojemności.
@@ -51,19 +43,13 @@ public class AnimalShelter {
      * @throws ShelterFullException Rzucany, gdy schronisko jest pełne.
      */
     public void addAnimal(Animal newAnimal) throws ShelterFullException {
-        // Sprawdzenie, czy jest wolne miejsce
-        if (animalCount < animals.length) {
-            // Przypisanie obiektu (np. Animals.Dog) do tablicy Animals.Animal[] - jest to Upcasting.
-            this.animals[animalCount] = newAnimal;
-            animalCount++;
+        try{
+            // Przypisanie obiektu (np. Dog) do tablicy Animal[] - jest to Upcasting.
+            this.animals[animalCount++] = newAnimal;
 
             // Aktualizacja pola statycznego
             totalAnimalsFound++;
-
-            // Wymaganie: Komunikat ułatwiający interakcję
-            System.out.println("Dodano zwierzę: " + newAnimal.getName() + " (ID: " + newAnimal.getId() + ") do schroniska.");
-        } else {
-            // Wymaganie: Rzucenie zdefiniowanego wyjątku użytkownika
+        } catch (IndexOutOfBoundsException exception) {
             throw new ShelterFullException("Schronisko jest pełne! Nie można przyjąć zwierząt.");
         }
     }
@@ -92,5 +78,47 @@ public class AnimalShelter {
         return animalCount;
     }
 
+
     // ... (Gettery dla employees i volunteers powinny być dodane dla kompletności hermetyzacji) ...
+    // Dodajmy tutaj metody pozwalające pobrać/działać z pracownikami, wolontariuszami i klientami schroniska
+
+    //Dodałem poniższe metody - Tomek
+
+    public Employee[] getEmployees(){
+        return employees;
+    }
+
+    public Volunteer[] getVolunteers() {
+        return volunteers;
+    }
+
+    public ArrayList<Client> getClients() {
+        return clients;
+    }
+
+    //Metody pobierania jednej osoby z tablicy zawierającej obiektu dziedziczące po Person
+
+    public Employee getEmployee(int employeeId){
+        return (Employee) getPersonFromTable(employeeId, this.employees);
+    }
+
+    public Volunteer getVolunteer(int volunteerId){
+        return (Volunteer) getPersonFromTable(volunteerId, this.volunteers);
+    }
+
+    public Client getClient(int clientId){
+        return (Client) getPersonFromTable(clientId, this.clients.toArray(new Person[clients.size()]));
+    }
+
+    //Metoda pobrania jednej osoby z odpowiednim id z tablicy typu Person
+    //W przypadku braku takiej osoby metoda zwaraca null
+    private Person getPersonFromTable(int personId, Person[] personTable){
+        for (Person person : personTable) {
+            if (person.getId() == personId) {
+                return person;
+            }
+        }
+        return null;
+    }
+
 }
