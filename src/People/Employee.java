@@ -1,5 +1,6 @@
 package People;
 
+// Klasa People.Employee, dziedzicząca po People.Person, która dodatkowo przechowuje informacje o salary
 public class Employee extends Person{
     private double salary;
 
@@ -7,6 +8,7 @@ public class Employee extends Person{
         super(name, surname, age); // korzystanie z kontruktora klasy Person:)
         this.salary = salary;
     }
+
 
 // gettery i settery
     public double getSalary() {

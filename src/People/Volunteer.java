@@ -1,5 +1,6 @@
 package People;
 
+// Klasa People.Volunteer, która dziedziczy po People.Person i przechowuje informacje o tym, w jaki sposób pomaga dany wolontariusz
 public class Volunteer extends Person{
     String howIsHelping;
 
