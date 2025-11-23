@@ -97,6 +97,9 @@ public class AnimalShelter {
     }
 
     //Metody pobierania jednej osoby z tablicy zawierającej obiektu dziedziczące po Person
+    public void addClient(Client c){
+        this.clients.add(c);
+    }
 
     public Employee getEmployee(int employeeId){
         return (Employee) getPersonFromTable(employeeId, this.employees);
