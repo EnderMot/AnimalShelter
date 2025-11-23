@@ -9,7 +9,7 @@ public class Hamster extends Animal{
     /**
      * Konstruktor klasy Animals.Hamster, wymaga podania danych do kalsy Animals.Animal
      * */
-    Hamster(String name, int age, Traits trait){
+    public Hamster(String name, int age, Traits trait){
         super(name, age, trait);
     }
 

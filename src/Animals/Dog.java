@@ -9,7 +9,7 @@ public class Dog extends Animal{
     /**
      * Konstruktor klasy Animals.Dog, wymaga podania danych do kalsy Animals.Animal
      * */
-    Dog(String name, int age, Traits trait){
+    public Dog(String name, int age, Traits trait){
         super(name, age, trait);
     }
 

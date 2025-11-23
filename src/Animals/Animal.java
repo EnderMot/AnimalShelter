@@ -2,6 +2,7 @@ package Animals;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Objects;
 
 import Enums.Traits;
@@ -11,7 +12,7 @@ import People.Client;
 * Klasa Animals.Animal
 * Klasa abstrakcyjna mająca na celu być klasą po której będą dziedziczyć klasy gatunków zwierząt
 */
-public abstract class Animal {
+public abstract class Animal implements Comparable<Animal>{
 
     //Pole statyczne, zawierające ostatnie ID które zostało przypisane do ostatniego stworzonego obiektu klasy Animals.Animal
     private static int lastId;
@@ -33,7 +34,7 @@ public abstract class Animal {
 
     //Pole adoptedBy, zawiera informację przez kogo jest adoptowane dane zwierze
     private Client adoptedBy;
-    private LocalDate dateOfAdoption;
+    private String dateOfAdoption;
 
 
     /**
@@ -93,7 +94,7 @@ public abstract class Animal {
     }
 
     //Metoda ustawiająca zmienne adoptedBy oraz dateOfAdoption, ustawienie ich oznacza że zwierzę zostało zaadoptowane
-    public void adoption(Client client, LocalDate date){
+    public void adoption(Client client, String date){
         this.adoptedBy = client;
         this.dateOfAdoption = date;
     }
@@ -109,16 +110,25 @@ public abstract class Animal {
         return adoptedBy != null;
     }
 
+    public String getDateOfAdoption(){
+        return dateOfAdoption;
+    }
+
+
     @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public int compareTo(Animal otherAnimal) {
+        return ((Integer)(id)).compareTo(otherAnimal.id);
+    }
+
+    public static class AnimalIdComparator implements Comparator<Animal>{
+        @Override
+        public int compare(Animal animal1, Animal animal2) {
+            return Integer.compare(animal1.id, animal2.id);
+        }
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this==obj) return true;
-        else if (obj==null || this.getClass()!=obj.getClass()) return false;
-        Animal animal = (Animal) obj;
-        return this.id==animal.getId();
+    public String toString() {
+        return this.name +" wiek: "+this.age+" id: "+this.id;
     }
 }
