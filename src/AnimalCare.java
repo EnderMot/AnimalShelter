@@ -2,6 +2,7 @@ import Enums.ServiceType;
 import People.Person;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Klasa AnimalCare.
@@ -85,4 +86,27 @@ public class AnimalCare {
     public Person getWhoPerformed() {
         return whoPerformed;
     }
+}
+/**
+ * Wymaganie: Nadpisanie metody equals.
+ * Dwa rekordy opieki są równe, jeśli mają ten sam typ usługi, datę
+ * i zostały wykonane przez tę samą osobę.
+ */
+@Override
+public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    AnimalCare that = (AnimalCare) o;
+    return serviceType == that.serviceType &&
+            Objects.equals(serviceDate, that.serviceDate) &&
+            Objects.equals(whoPerformed, that.whoPerformed);
+}
+
+/**
+ * Wymaganie: Nadpisanie metody hashCode.
+ * Generuje unikalny kod haszujący na podstawie kluczowych pól obiektu.
+ */
+@Override
+public int hashCode() {
+    return Objects.hash(serviceType, serviceDate, whoPerformed);
 }
