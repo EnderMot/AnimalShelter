@@ -2,6 +2,8 @@ package Animals;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
+
 import Enums.Traits;
 import People.Client;
 
@@ -105,5 +107,18 @@ public abstract class Animal {
     //Metoda sprawdzająca czy zwierzak jest zadaptowany
     public boolean isAdopted(){
         return adoptedBy != null;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this==obj) return true;
+        else if (obj==null || this.getClass()!=obj.getClass()) return false;
+        Animal animal = (Animal) obj;
+        return this.id==animal.getId();
     }
 }
