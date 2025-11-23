@@ -3,6 +3,7 @@ import Animals.Animal;
 
 import java.util.ArrayList;
 
+// Klasa People.Client, która dziedziczy po People.Person i przechowuje listę zaadoptowanych zwierząt
 public class Client extends Person{
     ArrayList<Animal> adoptedAnimals = new ArrayList<>();
 
