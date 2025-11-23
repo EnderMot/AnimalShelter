@@ -55,7 +55,8 @@ public class Main {
                 new Dog(    "Błysk",        1, Traits.PLAYFULL),
                 new Hamster("Kulka",        1, Traits.GLUTTON),
                 new Fox(    "Brylant",      1, Traits.ACTIVE),
-                new Cat(    "Nandor",       1, Traits.GRUMPY)
+                new Cat(    "Nandor",       1, Traits.GRUMPY),
+                null, null, null, null, null
         };
 
         Animal[] shelterTwoAnimals = {
@@ -63,7 +64,8 @@ public class Main {
                 new Dog(    "Burza",    1, Traits.PICKYEATER),
                 new Hamster("Luke",     1, Traits.SLEEPY),
                 new Fox(    "Grom",     1, Traits.LOVELY),
-                new Cat(    "Migot",    1, Traits.SLEEPY)
+                new Cat(    "Migot",    1, Traits.SLEEPY),
+                null, null, null, null, null
         };
 
         AnimalShelter[] shelters = {
@@ -109,7 +111,7 @@ public class Main {
         return provided;
     }
 
-    public static void adoption(Animal selectedAnimal){
+    public static void adoption(Animal selectedAnimal, AnimalShelter selectedShelter){
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Podaj informacje o osobie adoptującej:");
@@ -127,12 +129,12 @@ public class Main {
                 age = 0;
             }
         }
-        System.out.println("Podaj datę adopcji: ");
-        String adoptionDate = scanner.nextLine();
-
+        System.out.println();
         Client adopter = new Client(name,surname,age);
-        selectedAnimal.adoption(adopter, adoptionDate);
+        selectedAnimal.adoption(adopter, LocalDate.now());
         adopter.addAdoptedAnimal(selectedAnimal);
+        selectedShelter.addClient(adopter);
+
 
         System.out.println("Zwierzę adoptowane przez "+adopter.getName()+" "+adopter.getSurname());
     }
@@ -146,7 +148,7 @@ public class Main {
             else if (selectedAnimal instanceof Fox) species = "Lis";
             System.out.println("\n\n"+species + " " + selectedAnimal);
             if (selectedAnimal.isAdopted()){
-                System.out.println("Adoptowany przez: "+selectedAnimal.isAdopted());
+                System.out.println("Adoptowany przez: "+selectedAnimal.getAdoptedBy().getName()+" "+selectedAnimal.getAdoptedBy().getSurname());
                 System.out.println("Adoptowany od: "+selectedAnimal.getDateOfAdoption());
             }
             else{
@@ -157,36 +159,113 @@ public class Main {
 
             System.out.println("\nFunkcje zarządzania zwierzęciem:");
             System.out.println("1. Adopcja.");
-            System.out.println("2. Powrót do listy zwierząt.");
-            int[] allowedValues = {1,2};
+            System.out.println("2. Zmień imię.");
+            System.out.println("3. Powrót do listy zwierząt.");
+            int[] allowedValues = {1,2,3};
             int functionChoice = menuSelector(allowedValues);
-            if (functionChoice == 2){
+            if (functionChoice == 3){
                 break;
+            } else if (functionChoice == 2) {
+                System.out.println("Podaj nowę imię dla zwierzaka: ");
+                Scanner scanner = new Scanner(System.in);
+                String newName = scanner.nextLine();
+                selectedAnimal.setName(newName);
             }
-            adoption(selectedAnimal);
-
+            else adoption(selectedAnimal, selectedShelter);
         }
+    }
+
+    public static void addNewAnimal(AnimalShelter selectedShelter){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Podaj informacje o zwierzęciu:");
+        System.out.println("Podaj gatunek: ");
+        String species = scanner.nextLine();
+        while (!species.toLowerCase().equals("kot") && !species.toLowerCase().equals("pies") && !species.toLowerCase().equals("chomik") && !species.toLowerCase().equals("lis")){
+            System.out.println("Niepoprawny gatunek. Podaj gatunek: kot, pies, chomik lub lis.");
+            species = scanner.nextLine();
+        }
+        System.out.println("Podaj imie zwierzaka: ");
+        String name = scanner.nextLine();
+        System.out.println("Podaj wiek: ");
+        int age = 0;
+        while (age==0) {
+            try {
+                age = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Błąd systemu, została podana wartość tekstowa zamiast liczbowej.");
+                age = 0;
+            }
+        }
+        System.out.println("Podaj cechę charakteru zwierzaka. ");
+        System.out.println("Dostępne cechy to: playfull, grumpy, sleepy, active, pickyeater, glutton, cute, lovely.");
+        String traitString = "";
+        boolean notATrait = true;
+        while (notATrait){
+            System.out.println("Podaj poprawną cechę: ");
+            traitString = scanner.nextLine();
+            for (Traits trait : Traits.values()){
+                if (trait.toString().equalsIgnoreCase(traitString)){
+                    notATrait = false;
+                }
+            }
+            if (!notATrait) break;
+        }
+
+        Animal newAnimal = null;
+
+        if (species.toLowerCase().equals("kot")){
+            newAnimal = new Cat (name, age, Traits.valueOf(traitString.toUpperCase()));
+        }
+        else if (species.toLowerCase().equals("pies")){
+            newAnimal = new Dog (name, age, Traits.valueOf(traitString.toUpperCase()));
+        }
+        else if (species.toLowerCase().equals("chomik")){
+            newAnimal = new Hamster (name, age, Traits.valueOf(traitString.toUpperCase()));
+        }
+        else if (species.toLowerCase().equals("lis")){
+            newAnimal = new Fox (name, age, Traits.valueOf(traitString.toUpperCase()));
+        }
+        else System.out.println("Nie można dodać zwierzaka.");
+
+        if (newAnimal != null)
+            try {
+                selectedShelter.addAnimal(newAnimal);
+            }
+            catch (ShelterFullException e){
+                System.out.println("\nSchronisko jest pełne, nie można dodać więcej zwierzaków.\n");
+            }
+        else
+            System.out.println("Nie można dodać zwierzaka");
     }
 
     public static void functionOne(AnimalShelter selectedShelter){
         while (true) {
             Animal[] animals = selectedShelter.getAnimals();
             Arrays.sort(animals, new Animal.AnimalIdComparator());
-            int[] allowedValues = new int[animals.length + 2];
-            for (int i = 0; i < animals.length; i++) {
-                Animal animal = animals[i];
-                String species = "";
-                if (animal instanceof Cat) species = "Kot";
-                else if (animal instanceof Dog) species = "Pies";
-                else if (animal instanceof Hamster) species = "Chomik";
-                else if (animal instanceof Fox) species = "Lis";
-                System.out.println((i + 1) + ". " + species + " " + animal);
-                allowedValues[i] = i + 1;
+            int animalCount = 0;
+            for (Animal animal : animals){
+                if (animal!=null){
+                    animalCount++;
+                }
             }
-            System.out.println((animals.length+1) + ". Dodaj nowe zwierzę do schroniska.");
-            allowedValues[animals.length] = animals.length + 1;
-            System.out.println((animals.length+2) + ". Powrót do wyboru funkcji.");
-            allowedValues[animals.length+1] = animals.length + 2;
+            int[] allowedValues = new int[animalCount + 2];
+            for (int i = 0; i < animalCount; i++) {
+                Animal animal = animals[i];
+                if (animal != null) {
+                    String species = "";
+                    if (animal instanceof Cat) species = "Kot";
+                    else if (animal instanceof Dog) species = "Pies";
+                    else if (animal instanceof Hamster) species = "Chomik";
+                    else if (animal instanceof Fox) species = "Lis";
+                    System.out.println((i + 1) + ". " + species + " " + animal);
+                    allowedValues[i] = i + 1;
+                }
+            }
+            System.out.println((animalCount+1) + ". Dodaj nowe zwierzę do schroniska.");
+            allowedValues[animalCount] = animalCount + 1;
+            System.out.println((animalCount+2) + ". Powrót do wyboru funkcji.");
+            allowedValues[animalCount+1] = animalCount + 2;
             System.out.println("Wybierz numer zwierzęcia którym chcesz zrządzać.");
             System.out.print("Podaj właściwy numer z zakresu od " + allowedValues[0] + " do " + allowedValues[allowedValues.length - 1] + " : ");
             int chosenAnimal = menuSelector(allowedValues);
@@ -194,7 +273,7 @@ public class Main {
                 break;
             }
             else if (chosenAnimal == allowedValues[allowedValues.length-2]){
-                System.out.println("PASS");
+                addNewAnimal(selectedShelter);
             }
             else {
                 animalMangament(selectedShelter, animals[chosenAnimal - 1]);

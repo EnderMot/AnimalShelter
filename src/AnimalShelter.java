@@ -41,6 +41,12 @@ public class AnimalShelter {
         this.employees = employees;
         this.volunteers = volunteers;
         this.animals = animals;
+        for (Animal animal : animals){
+            if (animal != null) {
+                animalCount++;
+            }
+        }
+        totalAnimalsFound=animalCount;
     }
 
 

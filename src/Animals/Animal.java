@@ -34,7 +34,7 @@ public abstract class Animal implements Comparable<Animal>{
 
     //Pole adoptedBy, zawiera informację przez kogo jest adoptowane dane zwierze
     private Client adoptedBy;
-    private String dateOfAdoption;
+    private LocalDate dateOfAdoption;
 
 
     /**
@@ -94,7 +94,7 @@ public abstract class Animal implements Comparable<Animal>{
     }
 
     //Metoda ustawiająca zmienne adoptedBy oraz dateOfAdoption, ustawienie ich oznacza że zwierzę zostało zaadoptowane
-    public void adoption(Client client, String date){
+    public void adoption(Client client, LocalDate date){
         this.adoptedBy = client;
         this.dateOfAdoption = date;
     }
@@ -110,7 +110,11 @@ public abstract class Animal implements Comparable<Animal>{
         return adoptedBy != null;
     }
 
-    public String getDateOfAdoption(){
+    public Client getAdoptedBy(){
+        return adoptedBy;
+    }
+
+    public LocalDate getDateOfAdoption(){
         return dateOfAdoption;
     }
 
@@ -123,6 +127,7 @@ public abstract class Animal implements Comparable<Animal>{
     public static class AnimalIdComparator implements Comparator<Animal>{
         @Override
         public int compare(Animal animal1, Animal animal2) {
+            if (animal1 == null || animal2 == null) return 0;
             return Integer.compare(animal1.id, animal2.id);
         }
     }
