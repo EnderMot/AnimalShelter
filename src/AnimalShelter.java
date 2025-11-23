@@ -4,6 +4,8 @@ import People.Employee;
 import People.Person;
 import People.Volunteer;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Arrays;
 
 /**
  * Klasa AnimalShelter.
@@ -97,6 +99,9 @@ public class AnimalShelter {
     }
 
     //Metody pobierania jednej osoby z tablicy zawierającej obiektu dziedziczące po Person
+    public void addClient(Client c){
+        this.clients.add(c);
+    }
 
     public Employee getEmployee(int employeeId){
         return (Employee) getPersonFromTable(employeeId, this.employees);
@@ -120,5 +125,39 @@ public class AnimalShelter {
         }
         return null;
     }
+    /**
+     * Wymaganie: Nadpisanie metody equals.
+     * Dwa schroniska są równe, jeśli mają ten sam stan wewnętrzny
+     * (liczbę zwierząt, te same kolekcje/tablice).
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AnimalShelter that = (AnimalShelter) o;
 
+        return animalCount == that.animalCount &&
+                clients.equals(that.clients) &&
+                Arrays.equals(animals, that.animals) && // Porównywanie tablic
+                Arrays.equals(employees, that.employees) &&
+                Arrays.equals(volunteers, that.volunteers);
+    }
+
+    /**
+     * Wymaganie: Nadpisanie metody hashCode.
+     * Generuje unikalny kod haszujący na podstawie tablic i kolekcji.
+     */
+    @Override
+    public int hashCode() {
+        // Obliczenie hasha dla pól niebędących tablicami
+        int result = Objects.hash(clients, animalCount);
+
+        // Obliczenie hasha dla tablic
+        result = 31 * result + Arrays.hashCode(animals);
+        result = 31 * result + Arrays.hashCode(employees);
+        result = 31 * result + Arrays.hashCode(volunteers);
+
+        return result;
+    }
 }
+
