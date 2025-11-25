@@ -51,12 +51,7 @@ public abstract class Person implements Comparable<Person> {
     // Metoda toString - zwraca tekstową reprezentację obiektu w postaci ciągu znaków, nadpisanie jej pozwala na uniknięcie błędów wynikających z, np. literówek
     @Override
     public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", age=" + age +
-                '}';
+        return this.name +" "+this.surname+" | Wiek: "+this.age+" | Id: "+this.id;
     }
 
     // Metoda equals(), która porównuje obiekty na podstawie ID danego obiektu i sprawdza czy są takie same
