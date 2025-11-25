@@ -2,8 +2,6 @@ import Animals.*;
 import Enums.*;
 import People.*;
 
-import javax.sound.midi.Soundbank;
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -111,6 +109,8 @@ public class Main {
         return provided;
     }
 
+    //region [Category: PierwszaFunkcjaUI]
+    // METODY PIERWSZEJ FUNCKJI UI ZARZĄDZANIA ZWIERZĘTAMI W SCHRONISKU
     public static void adoption(Animal selectedAnimal, AnimalShelter selectedShelter){
         Scanner scanner = new Scanner(System.in);
 
@@ -139,14 +139,14 @@ public class Main {
         System.out.println("Zwierzę adoptowane przez "+adopter.getName()+" "+adopter.getSurname());
     }
 
-    public static void animalMangament(AnimalShelter selectedShelter, Animal selectedAnimal){
+    public static void animalManagment(AnimalShelter selectedShelter, Animal selectedAnimal){
         while(true) {
             String species = "";
             if (selectedAnimal instanceof Cat) species = "Kot";
             else if (selectedAnimal instanceof Dog) species = "Pies";
             else if (selectedAnimal instanceof Hamster) species = "Chomik";
             else if (selectedAnimal instanceof Fox) species = "Lis";
-            System.out.println("\n\n"+species + " " + selectedAnimal);
+            System.out.println("\n\n"+species + ": " + selectedAnimal);
             if (selectedAnimal.isAdopted()){
                 System.out.println("Adoptowany przez: "+selectedAnimal.getAdoptedBy().getName()+" "+selectedAnimal.getAdoptedBy().getSurname());
                 System.out.println("Adoptowany od: "+selectedAnimal.getDateOfAdoption());
@@ -158,18 +158,29 @@ public class Main {
             System.out.println("Lista przeszłych imion: "+ selectedAnimal.getPastNames());
 
             System.out.println("\nFunkcje zarządzania zwierzęciem:");
-            System.out.println("1. Adopcja.");
-            System.out.println("2. Zmień imię.");
-            System.out.println("3. Powrót do listy zwierząt.");
             int[] allowedValues = {1,2,3};
+            if (!selectedAnimal.isAdopted()){
+                System.out.println("1. Adopcja.");
+                System.out.println("2. Zmień imię.");
+                System.out.println("3. Powrót do listy zwierząt.");
+            }
+            else{
+                System.out.println("1. Oddanie do schroniska.");
+                System.out.println("2. Zmień imię.");
+                System.out.println("3. Powrót do listy zwierząt.");
+            }
+
             int functionChoice = menuSelector(allowedValues);
-            if (functionChoice == 3){
+            if (functionChoice == allowedValues[allowedValues.length-1]){
                 break;
-            } else if (functionChoice == 2) {
+            } else if (functionChoice == allowedValues[allowedValues.length-2]) {
                 System.out.println("Podaj nowę imię dla zwierzaka: ");
                 Scanner scanner = new Scanner(System.in);
                 String newName = scanner.nextLine();
                 selectedAnimal.setName(newName);
+            }
+            else if (selectedAnimal.isAdopted()){
+                selectedAnimal.returnToShelter();
             }
             else adoption(selectedAnimal, selectedShelter);
         }
@@ -276,18 +287,86 @@ public class Main {
                 addNewAnimal(selectedShelter);
             }
             else {
-                animalMangament(selectedShelter, animals[chosenAnimal - 1]);
+                animalManagment(selectedShelter, animals[chosenAnimal - 1]);
             }
         }
     }
+    //KONIEC METOD PIERWSZEJ FUNKCJI UI
+    //endregion [Category: PierwszaFunkcjaUI]
+
+    //region [Category: DrugaFunkcjaUI]
+    //METODY DRUGIEJ FUNCKJI UI ZARZĄDZANIA PRACOWNIKAMI W SCHRONISKU
 
     public static void functionTwo(AnimalShelter selectedShelter){
 
     }
+    // KONIEC METOD DRUGIEJ FUNKCJI UI
+    //endregion [Category: DrugaFunkcjaUI]
+
+    //region [Category: TrzeciaFunkcjaUI]
+    //METODY TRZECIEJ FUNCKJI UI ZARZĄDZANIA KLIENTAMI W SCHRONISKU
+    public static void clientManagment(Client selectedClient, AnimalShelter selectedShelter){
+        while(true) {
+            System.out.println("\n\n"+selectedClient);
+            if (selectedClient.getAdoptedAnimals().size()==0){
+                System.out.println("Klient (id: "+selectedClient.getId()+") nie adoptował żadnego zwierzęcia.");
+            }
+            else{
+                System.out.println("Adoptowane zwierzęta klienta (id: +"+selectedClient.getId()+"): ");
+                ArrayList<Animal> animals = selectedClient.getAdoptedAnimals();
+                for (int i =0; i<animals.size(); i++){
+                    Animal animal = animals.get(i);
+                    String species = "";
+                    if (animal instanceof Cat) species = "Kot";
+                    else if (animal instanceof Dog) species = "Pies";
+                    else if (animal instanceof Hamster) species = "Chomik";
+                    else if (animal instanceof Fox) species = "Lis";
+                    System.out.println(i+". "+species + ": " + animal);
+                }
+            }
+
+            System.out.println("\nFunkcje zarządzania klientem:");
+            System.out.println("1. Powrót do listy klientów.");
+            int[] allowedValues = {1};
+            int functionChoice = menuSelector(allowedValues);
+            if (functionChoice == 1){
+                break;
+            }
+        }
+    }
 
     public static void functionThree(AnimalShelter selectedShelter){
-
+        while (true) {
+            ArrayList<Client> clients = selectedShelter.getClients();
+            int clientCount = 0;
+            for (Client client : clients){
+                if (client!=null){
+                    clientCount++;
+                }
+            }
+            int[] allowedValues = new int[clientCount + 1];
+            for (int i = 0; i < clientCount; i++) {
+                Client client = clients.get(i);
+                if (client != null) {
+                    System.out.println((i + 1) + ". " + client);
+                    allowedValues[i] = i + 1;
+                }
+            }
+            System.out.println((clientCount+1) + ". Powrót do wyboru funkcji.");
+            allowedValues[clientCount] = clientCount + 1;
+            System.out.println("Wybierz numer klienta którym chcesz zrządzać.");
+            System.out.print("Podaj właściwy numer z zakresu od " + allowedValues[0] + " do " + allowedValues[allowedValues.length - 1] + " : ");
+            int chosenClient = menuSelector(allowedValues);
+            if (chosenClient == allowedValues[allowedValues.length-1]) {
+                break;
+            }
+            else {
+                clientManagment(clients.get(chosenClient - 1), selectedShelter);
+            }
+        }
     }
+    // KONIEC METOD TRZECIEJ FUNKCJI UI
+    //endregion [Category: TrzeciaFunkcjaUI]
 
     public static void functionFour(AnimalShelter selectedShelter){
 
@@ -319,11 +398,11 @@ public class Main {
                 System.out.println("PANEL ZARZĄDZANIA SCHRONISKIEM\n");
                 System.out.println("Dostepne funkcje:");
                 System.out.println("1. Wyświetl listę zwierząt w schronisku.");
-                System.out.println("2. Wyświetl listę pracowników schroniska.");
+                System.out.println("2. WIP Wyświetl listę pracowników schroniska.");
                 System.out.println("3. Wyświetl listę klientów schroniska.");
-                System.out.println("4. Wyświetl listę wolontariuszy schroniska.");
-                System.out.println("5. Wyświetl listę czynności wolontariuszy.");
-                System.out.println("6. Powrót do wyboru schroniska.");
+                System.out.println("4. WIP Wyświetl listę wolontariuszy schroniska.");
+                System.out.println("5. WIP Wyświetl listę czynności wolontariuszy.");
+                System.out.println("6. WIP Powrót do wyboru schroniska.");
                 System.out.print("\nWybierz funkcje którą chcesz wykonać.");
                 allowedValues = new int[]{1, 2, 3, 4, 5, 6};
                 System.out.print("Podaj właściwy numer z zakresu od " + allowedValues[0] + " do " + allowedValues[allowedValues.length - 1] + " : ");
