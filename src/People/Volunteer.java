@@ -6,7 +6,7 @@ public class Volunteer extends Person{
 
     public Volunteer(String name, String surname, int age, String howIsHelping) { // konstruktor
         super(name, surname, age);
-        this.howIsHelping = howIsHelping;
+        this.howIsHelping = howIsHelping; // moze zamiast tego jakos powiazac to z servicetype?? ehhhaaa
     }
 
     // gettery i settery
@@ -16,5 +16,10 @@ public class Volunteer extends Person{
 
     public void setHowIsHelping(String howIsHelping) {
         this.howIsHelping = howIsHelping;
+    }
+
+    @Override
+    public String getFullInformationAboutPerson() {
+        return getName() + " " + getSurname() + " wiek: " + getAge() + " pełniona funkcja: " + getHowIsHelping();
     }
 }

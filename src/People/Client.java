@@ -19,6 +19,11 @@ public class Client extends Person{
     public void addAdoptedAnimal(Animal animal){
         adoptedAnimals.add(animal);
     }
+
+    @Override
+    public String getFullInformationAboutPerson() {
+        return getName() + " " + getSurname() + " wiek: " + getAge() + " adoptowane zwierzęta: " + adoptedAnimals.size();
+    }
 }
 
 // zrobić metodę Adoption tutaj i potem dodać powiązanie do klasy Animals.Animal "adoptedBy"
