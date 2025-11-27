@@ -19,7 +19,7 @@ public class Hamster extends Animal{
      * Implementuje kod pozwalający przeliczyć wiek chomika na jego wiek w ludzkich latach
      * */
     @Override
-    int calculateAgeInHumanYears() {
+    public int calculateAgeInHumanYears() {
         return (int) (getAge()*365)/9;
     }
 }

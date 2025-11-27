@@ -20,7 +20,7 @@ public class Fox extends Animal{
      * Implementuje kod pozwalający przeliczyć wiek lisa na jego wiek w ludzkich latach
      * */
     @Override
-    int calculateAgeInHumanYears() {
+    public int calculateAgeInHumanYears() {
         return getAge()*7;
     }
 }

@@ -49,20 +49,20 @@ public class Main {
 
 
         Animal[] shelterOneAnimals = {
-                new Cat(    "Imperializm",  1, Traits.CUTE),
-                new Dog(    "Błysk",        1, Traits.PLAYFULL),
+                new Cat(    "Imperializm",  3, Traits.CUTE),
+                new Dog(    "Błysk",        5, Traits.PLAYFULL),
                 new Hamster("Kulka",        1, Traits.GLUTTON),
-                new Fox(    "Brylant",      1, Traits.ACTIVE),
-                new Cat(    "Nandor",       1, Traits.GRUMPY),
+                new Fox(    "Brylant",      4, Traits.ACTIVE),
+                new Cat(    "Nandor",       7, Traits.GRUMPY),
                 null, null, null, null, null
         };
 
         Animal[] shelterTwoAnimals = {
-                new Cat(    "Orfeusz",  1, Traits.GLUTTON),
-                new Dog(    "Burza",    1, Traits.PICKYEATER),
-                new Hamster("Luke",     1, Traits.SLEEPY),
-                new Fox(    "Grom",     1, Traits.LOVELY),
-                new Cat(    "Migot",    1, Traits.SLEEPY),
+                new Cat(    "Orfeusz",  7, Traits.GLUTTON),
+                new Dog(    "Burza",    3, Traits.PICKYEATER),
+                new Hamster("Luke",     2, Traits.SLEEPY),
+                new Fox(    "Grom",     6, Traits.LOVELY),
+                new Cat(    "Migot",    4, Traits.SLEEPY),
                 null, null, null, null, null
         };
 
@@ -75,8 +75,6 @@ public class Main {
     }
 
     public static int menuSelector(int[] allowedValues){
-
-
         int provided = 0;
 
         while (true) {
@@ -147,6 +145,7 @@ public class Main {
             else if (selectedAnimal instanceof Hamster) species = "Chomik";
             else if (selectedAnimal instanceof Fox) species = "Lis";
             System.out.println("\n\n"+species + ": " + selectedAnimal);
+            System.out.println("Wiek przeliczony na ludzkie lata: "+selectedAnimal.calculateAgeInHumanYears());
             if (selectedAnimal.isAdopted()){
                 System.out.println("Adoptowany przez: "+selectedAnimal.getAdoptedBy().getName()+" "+selectedAnimal.getAdoptedBy().getSurname());
                 System.out.println("Adoptowany od: "+selectedAnimal.getDateOfAdoption());
@@ -337,22 +336,9 @@ public class Main {
                 break;
             } else {
                 // Przypisanie wybranego pracownika
-                int currentIndex = 0;
-                Employee selectedEmployee = null;
-                for (Employee e : employees) {
-                    if (e != null) {
-                        currentIndex++;
-                        if (currentIndex == chosen) {
-                            selectedEmployee = e;
-                            break;
-                        }
-                    }
-                }
-
-                if (selectedEmployee != null) {
-                    employeeManagement(selectedEmployee);
-                }
-
+                int id = employees[chosen-1].getId();
+                Employee selectedEmployee = (Employee) selectedShelter.getPersonFromTable(id, employees);
+                employeeManagement(selectedEmployee);
             }
         }
 
@@ -378,7 +364,7 @@ public class Main {
 
             if (choice == 1) {
                 Jobs[] allJobs = Jobs.values(); // dostępne stanowiska w enum - Jobs
-                System.out.println("Dostępne stanowuska:");
+                System.out.println("Dostępne stanowiska:");
                 for (int i = 0; i < allJobs.length; i++) {
                     System.out.println((i + 1) + ". " + allJobs[i]);
                 }
@@ -470,19 +456,49 @@ public class Main {
                 break;
             }
             else {
-                clientManagment(clients.get(chosenClient - 1), selectedShelter);
+                clientManagment((Client) selectedShelter.getPersonFromTable(clients.get(chosenClient - 1).getId(), (Client[])clients.toArray()), selectedShelter);
             }
         }
     }
     // KONIEC METOD TRZECIEJ FUNKCJI UI
     //endregion [Category: TrzeciaFunkcjaUI]
 
+    //region [Category: CzwartaFunkcjaUI]
+    //METODY CZWARTEJ FUNCKJI UI ZARZĄDZANIA WOLONTARIUSZAMI W SCHRONISKU
     public static void functionFour(AnimalShelter selectedShelter){
-
+        while (true) {
+            Volunteer[] volunteers = selectedShelter.getVolunteers();
+            int volunteerCount = 0;
+            for (Volunteer volunteer : volunteers){
+                if (volunteer!=null){
+                    volunteerCount++;
+                }
+            }
+            int[] allowedValues = new int[volunteerCount + 1];
+            for (int i = 0; i < volunteerCount; i++) {
+                Volunteer volunteer = volunteers[i];
+                if (volunteer != null) {
+                    System.out.println((i + 1) + ". " + volunteer);
+                    allowedValues[i] = i + 1;
+                }
+            }
+            System.out.println((volunteerCount+1) + ". Powrót do wyboru funkcji.");
+            allowedValues[volunteerCount] = volunteerCount + 1;
+            System.out.println("Wybierz numer wolontariusza którym chcesz zrządzać.");
+            System.out.print("Podaj właściwy numer z zakresu od " + allowedValues[0] + " do " + allowedValues[allowedValues.length - 1] + " : ");
+            int chosenClient = menuSelector(allowedValues);
+            if (chosenClient == allowedValues[allowedValues.length-1]) {
+                break;
+            }
+            else {
+                System.out.println("\nPLACEHOLDER: wybrano wolontariusza: "+selectedShelter.getPersonFromTable(volunteers[chosenClient - 1].getId(), volunteers));
+                //PAT O TUTAJ TRZEBA TĄ FUNKCJĘ
+                //TUTAJ_FUNKCJA_DO_WOLONTARIUSZY_PAT(selectedShelter.getPersonFromTable(volunteers[chosenClient - 1].getId(), volunteers), selectedShelter);
+                //DOKŁADNIE TUTAJ
+            }
+        }
     }
-    public static void functionFive(AnimalShelter selectedShelter){
 
-    }
 
     public static void mainLoop(AnimalShelter[] shelters){
         while (true) {
@@ -507,13 +523,12 @@ public class Main {
                 System.out.println("PANEL ZARZĄDZANIA SCHRONISKIEM\n");
                 System.out.println("Dostepne funkcje:");
                 System.out.println("1. Wyświetl listę zwierząt w schronisku.");
-                System.out.println("2. WIP Wyświetl listę pracowników schroniska.");
+                System.out.println("2. Wyświetl listę pracowników schroniska.");
                 System.out.println("3. Wyświetl listę klientów schroniska.");
                 System.out.println("4. WIP Wyświetl listę wolontariuszy schroniska.");
-                System.out.println("5. WIP Wyświetl listę czynności wolontariuszy.");
-                System.out.println("6. WIP Powrót do wyboru schroniska.");
+                System.out.println("5. Powrót do wyboru schroniska.");
                 System.out.print("\nWybierz funkcje którą chcesz wykonać.");
-                allowedValues = new int[]{1, 2, 3, 4, 5, 6};
+                allowedValues = new int[]{1, 2, 3, 4, 5};
                 System.out.print("Podaj właściwy numer z zakresu od " + allowedValues[0] + " do " + allowedValues[allowedValues.length - 1] + " : ");
                 int chosenFunction = menuSelector(allowedValues);
 
@@ -531,9 +546,6 @@ public class Main {
                     System.out.println("Wybrano listę wolontariuszy.");
                     functionFour(selectedShelter);
                 } else if (chosenFunction == 5) {
-                    System.out.println("Wybrano listę czynności.");
-                    functionFive(selectedShelter);
-                } else if (chosenFunction == 6) {
                     System.out.println("Powrót do wyboru schroniska.");
                     break;
                 } else {

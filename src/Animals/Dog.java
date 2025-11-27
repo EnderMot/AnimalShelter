@@ -19,7 +19,7 @@ public class Dog extends Animal{
      * Implementuje kod pozwalający przeliczyć wiek psa na jego wiek w ludzkich latach
      * */
     @Override
-    int calculateAgeInHumanYears() {
+    public int calculateAgeInHumanYears() {
         return (int) (16*Math.log(getAge())+31);
     }
 }
