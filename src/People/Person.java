@@ -76,5 +76,8 @@ public abstract class Person implements Comparable<Person> {
     public int compareTo(Person otherPerson) {
         return ((Integer)(id)).compareTo(otherPerson.id);
     }
+
+    // metoda abstrakcujna do wyświetlania informacji o osobie
+    public abstract String getFullInformationAboutPerson();
 }
 

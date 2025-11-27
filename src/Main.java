@@ -16,21 +16,21 @@ public class Main {
 
     public static AnimalShelter[] initAllObjects(){
         Employee[] shelterOneEmployees = {
-                new Employee("Karina",  "Fabian",       34,5630),
-                new Employee("Mateusz", "Latek",        37,6420),
-                new Employee("Kamila",  "Darowska",     56,6530),
-                new Employee("Jacek",   "Płaczek",      23,4620),
-                new Employee("Rudolf",  "Szczeblewski", 25,5630),
-                new Employee("Adela",   "Kasprzyk",     42,7700)
+                new Employee("Karina",  "Fabian",       34,5630, Jobs.ADOPTION_COORDINATOR),
+                new Employee("Mateusz", "Latek",        37,6420, Jobs.CARE_WORKER),
+                new Employee("Kamila",  "Darowska",     56,6530, Jobs.SHELTER_MANAGER),
+                new Employee("Jacek",   "Płaczek",      23,4620, Jobs.ADMINISTRATION),
+                new Employee("Rudolf",  "Szczeblewski", 25,5630, Jobs.SECURITY_STAFF),
+                new Employee("Adela",   "Kasprzyk",     42,7700, Jobs.VETERINARY_TECHNICIAN)
         };
 
         Employee[] shelterTwoEmployees = {
-                new Employee("Paulina",     "Kędzierska",   39,4230),
-                new Employee("Czesław",     "Mytnik",       26,5302),
-                new Employee("Sebastian",   "Kuboszek",     52,7270),
-                new Employee("Ludwik",      "Juraszczyk",   31,4650),
-                new Employee("Daniel",      "Malesa",       43,5300),
-                new Employee("Laura",       "Szafranek",    23,6220)
+                new Employee("Paulina",     "Kędzierska",   39,4230, Jobs.ADOPTION_COORDINATOR),
+                new Employee("Czesław",     "Mytnik",       26,5302, Jobs.CARE_WORKER),
+                new Employee("Sebastian",   "Kuboszek",     52,7270, Jobs.SHELTER_MANAGER),
+                new Employee("Ludwik",      "Juraszczyk",   31,4650, Jobs.VETERINARY_TECHNICIAN),
+                new Employee("Daniel",      "Malesa",       43,5300, Jobs.SECURITY_STAFF),
+                new Employee("Laura",       "Szafranek",    23,6220, Jobs.ADMINISTRATION)
         };
 
         Volunteer[] shelterOneVolunteers= {
@@ -298,6 +298,115 @@ public class Main {
     //METODY DRUGIEJ FUNCKJI UI ZARZĄDZANIA PRACOWNIKAMI W SCHRONISKU
 
     public static void functionTwo(AnimalShelter selectedShelter){
+
+        while (true) {
+
+            Employee[] employees = selectedShelter.getEmployees();
+
+            // Sprawdzenie liczby pracowników
+            int employeeCount = 0;
+            for (Employee e : employees) {
+                if (e != null) employeeCount++;
+            }
+
+            int[] allowedValues = new int[employeeCount + 1];
+
+            System.out.println("\n\nLista pracowników schroniska ");
+
+            int index = 0;
+            for (int i = 0; i < employees.length; i++) {
+                Employee e = employees[i];
+                if (e != null) {
+                    System.out.println((index + 1) + ". " + e);
+                    allowedValues[index] = index + 1;
+                    index++;
+                }
+            }
+
+            // opcja powrotu do menu głównego
+            System.out.println((employeeCount + 1) + ". Powrót do menu głównego");
+            allowedValues[employeeCount] = employeeCount + 1;
+
+            System.out.println("Wybierz numer pracownika, którym chcesz zarządzać.");
+            System.out.println("Podaj właściwy numer z zakresu od "
+                + allowedValues[0] + " do " + allowedValues[allowedValues.length - 1] + " : ");
+
+            int chosen = menuSelector(allowedValues);
+
+            if (chosen == allowedValues[allowedValues.length - 1]) {
+                break;
+            } else {
+                // Przypisanie wybranego pracownika
+                int currentIndex = 0;
+                Employee selectedEmployee = null;
+                for (Employee e : employees) {
+                    if (e != null) {
+                        currentIndex++;
+                        if (currentIndex == chosen) {
+                            selectedEmployee = e;
+                            break;
+                        }
+                    }
+                }
+
+                if (selectedEmployee != null) {
+                    employeeManagement(selectedEmployee);
+                }
+
+            }
+        }
+
+    }
+
+    public static void employeeManagement(Employee employee) {
+
+        while (true) {
+            System.out.println("\n\nPracownik: " + employee);
+            System.out.println("\nZarządzanie pracownikiem:");
+
+            int[] allowedValues = {1, 2, 3};
+
+            System.out.println("1. Zmień stanowisko.");
+            System.out.println("2. Zmień pensję.");
+            System.out.println("3. Powrót do listy pracowników.");
+
+            int choice = menuSelector(allowedValues);
+
+            if (choice == 3) break;
+
+            Scanner scanner = new Scanner(System.in);
+
+            if (choice == 1) {
+                Jobs[] allJobs = Jobs.values(); // dostępne stanowiska w enum - Jobs
+                System.out.println("Dostępne stanowuska:");
+                for (int i = 0; i < allJobs.length; i++) {
+                    System.out.println((i + 1) + ". " + allJobs[i]);
+                }
+
+                System.out.print("Wybierz numer nowego stanowiska: ");
+
+                int[] allowedJobNumbers = new int[allJobs.length];
+                for (int i = 0; i < allJobs.length; i++) allowedJobNumbers[i] = i + 1;
+
+                int chosenJobNumber = menuSelector(allowedJobNumbers);
+
+                // przypisanie nowego stanowiska
+                employee.setJobs(allJobs[chosenJobNumber - 1]);
+                System.out.println("Zmieniono stanowisko na: " + allJobs[chosenJobNumber - 1]);
+
+            }
+
+            if (choice == 2) {
+                System.out.print("Podaj nową pensję: ");
+                try {
+                    double newSalary = scanner.nextDouble();
+                    employee.setSalary(newSalary);
+                    System.out.println("Zmieniono pensję.");
+                } catch (Exception e) {
+                    System.out.println("Błąd, podano tekst zamiast liczby.");
+                }
+            }
+        }
 
     }
     // KONIEC METOD DRUGIEJ FUNKCJI UI
