@@ -18,7 +18,7 @@ public class Cat extends Animal{
     * Implementuje kod pozwalający przeliczyć wiek kota na jego wiek w ludzkich latach
     * */
     @Override
-    int calculateAgeInHumanYears() {
+    public int calculateAgeInHumanYears() {
         int currentAge = super.getAge();
         if (currentAge==1){
             return 15;

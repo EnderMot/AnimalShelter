@@ -115,22 +115,10 @@ public class AnimalShelter {
         this.clients.add(c);
     }
 
-    public Employee getEmployee(int employeeId){
-        return (Employee) getPersonFromTable(employeeId, this.employees);
-    }
-
-    public Volunteer getVolunteer(int volunteerId){
-        return (Volunteer) getPersonFromTable(volunteerId, this.volunteers);
-    }
-
-    public Client getClient(int clientId){
-        return (Client) getPersonFromTable(clientId, this.clients.toArray(new Person[clients.size()]));
-    }
-
     //Metoda pobrania jednej osoby z odpowiednim id z tablicy typu Person
     //W przypadku braku takiej osoby metoda zwaraca null
-    private Person getPersonFromTable(int personId, Person[] personTable){
-        for (Person person : personTable) {
+    public <T extends Person> Person getPersonFromTable(int personId, T[] personTable){
+        for (T person : personTable) {
             if (person.getId() == personId) {
                 return person;
             }

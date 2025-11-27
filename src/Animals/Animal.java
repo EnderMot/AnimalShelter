@@ -50,7 +50,7 @@ public abstract class Animal implements Comparable<Animal>{
     }
 
     //Metoda przeliczająca wiek zwierzęcia na wiek ludzki, do implementacji w klasach dziedziczących
-    abstract int calculateAgeInHumanYears();
+    public abstract int calculateAgeInHumanYears();
 
 //Gettery i settery pól klasy
     public int getId() {
