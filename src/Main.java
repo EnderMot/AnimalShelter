@@ -456,7 +456,7 @@ public class Main {
                 break;
             }
             else {
-                clientManagment((Client) selectedShelter.getPersonFromTable(clients.get(chosenClient - 1).getId(), (Client[]) clients.toArray()));
+                clientManagment(clients.get(chosenClient-1));
             }
         }
     }
