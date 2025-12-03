@@ -4,8 +4,6 @@ import People.Employee;
 import People.Person;
 import People.Volunteer;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Arrays;
 
 /**
  * Klasa AnimalShelter.
@@ -19,16 +17,16 @@ public class AnimalShelter {
 
     // Wymaganie: Tablica 1/3. Przechowuje zwierzęta w schronisku.
     // Daje możliwość Upcastingu (np. Animals.Dog, Animals.Cat są przechowywane jako Animals.Animal).
-    private Animal[] animals = new Animal[10];
+    private Animal[] animals;
 
     // Wymaganie: Tablica 2/3. Przechowuje pracowników (dziedziczą po People.Person).
-    private Employee[] employees = new Employee[6];
+    private Employee[] employees;
 
     // Wymaganie: Tablica 3/3. Przechowuje wolontariuszy (dziedziczą po People.Person).
-    private Volunteer[] volunteers = new Volunteer[4];
+    private Volunteer[] volunteers;
 
     //Przechowuje dynamiczą listę klientów schroniska
-    private ArrayList<Client> clients = new ArrayList<Client>();
+    private ArrayList<Client> clients = new ArrayList<>();
 
     // Licznik przechowujący aktualną liczbę zwierząt. Potrzebny do zarządzania tablicą (indeksowanie).
     private int animalCount = 0;

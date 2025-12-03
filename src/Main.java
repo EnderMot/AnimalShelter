@@ -67,16 +67,14 @@ public class Main {
                 null, null, null, null, null
         };
 
-        AnimalShelter[] shelters = {
+        return new AnimalShelter[]{
                 new AnimalShelter(shelterOneEmployees, shelterOneVolunteers,shelterOneAnimals),
                 new AnimalShelter(shelterTwoEmployees, shelterTwoVolunteers, shelterTwoAnimals)
         };
-
-        return shelters;
     }
 
     public static int menuSelector(int[] allowedValues){
-        int provided = 0;
+        int provided;
 
         while (true) {
             Scanner scanner = new Scanner(System.in);
@@ -92,7 +90,10 @@ public class Main {
         while (!contains){
             Scanner scanner = new Scanner(System.in);
             for (int value : allowedValues){
-                if (value==provided) contains = true;
+                if (value == provided) {
+                    contains = true;
+                    break;
+                }
             }
             if (!contains) {
                 System.out.println("Podana opcja nie istnieje.");
@@ -125,7 +126,6 @@ public class Main {
                 age = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Błąd systemu, została podana wartość tekstowa zamiast liczbowej.");
-                age = 0;
             }
         }
         System.out.println();
@@ -146,6 +146,7 @@ public class Main {
             else if (selectedAnimal instanceof Hamster) species = "Chomik";
             else if (selectedAnimal instanceof Fox) species = "Lis";
             System.out.println("\n\n"+species + ": " + selectedAnimal);
+            System.out.println("Cecha zwierzaka: "+selectedAnimal.getTrait());
             System.out.println("Wiek przeliczony na ludzkie lata: "+selectedAnimal.calculateAgeInHumanYears());
             if (selectedAnimal.isAdopted()){
                 System.out.println("Adoptowany przez: "+selectedAnimal.getAdoptedBy().getName()+" "+selectedAnimal.getAdoptedBy().getSurname());
@@ -205,7 +206,6 @@ public class Main {
                 age = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Błąd systemu, została podana wartość tekstowa zamiast liczbowej.");
-                age = 0;
             }
         }
         System.out.println("Podaj cechę charakteru zwierzaka. ");
@@ -216,8 +216,9 @@ public class Main {
             System.out.println("Podaj poprawną cechę: ");
             traitString = scanner.nextLine();
             for (Traits trait : Traits.values()){
-                if (trait.toString().equalsIgnoreCase(traitString)){
+                if (trait.toString().equalsIgnoreCase(traitString)) {
                     notATrait = false;
+                    break;
                 }
             }
             if (!notATrait) break;
@@ -313,13 +314,11 @@ public class Main {
 
             System.out.println("\n\nLista pracowników schroniska ");
 
-            int index = 0;
             for (int i = 0; i < employees.length; i++) {
                 Employee e = employees[i];
                 if (e != null) {
-                    System.out.println((index + 1) + ". " + e);
-                    allowedValues[index] = index + 1;
-                    index++;
+                    System.out.println((i + 1) + ". " + e);
+                    allowedValues[i] = i + 1;
                 }
             }
 
@@ -401,10 +400,10 @@ public class Main {
 
     //region [Category: TrzeciaFunkcjaUI]
     //METODY TRZECIEJ FUNCKJI UI ZARZĄDZANIA KLIENTAMI W SCHRONISKU
-    public static void clientManagment(Client selectedClient, AnimalShelter selectedShelter){
+    public static void clientManagment(Client selectedClient){
         while(true) {
             System.out.println("\n\n"+selectedClient);
-            if (selectedClient.getAdoptedAnimals().size()==0){
+            if (selectedClient.getAdoptedAnimals().isEmpty()){
                 System.out.println("Klient (id: "+selectedClient.getId()+") nie adoptował żadnego zwierzęcia.");
             }
             else{
@@ -457,7 +456,7 @@ public class Main {
                 break;
             }
             else {
-                clientManagment((Client) selectedShelter.getPersonFromTable(clients.get(chosenClient - 1).getId(), (Client[])clients.toArray()), selectedShelter);
+                clientManagment((Client) selectedShelter.getPersonFromTable(clients.get(chosenClient - 1).getId(), (Client[]) clients.toArray()));
             }
         }
     }
@@ -499,13 +498,12 @@ public class Main {
 
                 System.out.println("\nWybrano wolontariusza: " + selectedVolunteer.getFullInformationAboutPerson());
 
-                volunteerManagement(selectedVolunteer, selectedShelter);
+                volunteerManagement(selectedVolunteer);
             }
         }
     }
 
-    public static void volunteerManagement(Volunteer volunteer, AnimalShelter selectedShelter) {
-        Scanner scanner = new Scanner(System.in);
+    public static void volunteerManagement(Volunteer volunteer) {
 
         while (true) {
             System.out.println("\nWolontariusz: " + volunteer.getFullInformationAboutPerson());

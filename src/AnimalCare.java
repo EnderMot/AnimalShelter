@@ -1,9 +1,6 @@
 import Enums.ServiceType;
 import People.Person;
 
-import java.time.LocalDate;
-import java.util.Objects;
-
 /**
  * Klasa AnimalCare.
  * Odpowiada za rejestrację pojedynczej, wykonanej usługi opieki nad zwierzęciem.

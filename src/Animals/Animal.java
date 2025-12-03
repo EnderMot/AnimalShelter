@@ -3,7 +3,6 @@ package Animals;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Objects;
 
 import Enums.Traits;
 import People.Client;
@@ -27,7 +26,7 @@ public abstract class Animal implements Comparable<Animal>{
     private String name;
 
     //Lista String, jest to lista zawierająca historię imion zwierzęcia
-    private ArrayList<String> pastNames = new ArrayList<String>();
+    private ArrayList<String> pastNames = new ArrayList<>();
 
     //Pole trait, zawiera jeden trait zwierzęcia
     private Traits trait;
