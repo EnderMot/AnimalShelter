@@ -1,25 +1,34 @@
 package People;
 
-// Klasa People.Volunteer, która dziedziczy po People.Person i przechowuje informacje o tym, w jaki sposób pomaga dany wolontariusz
-public class Volunteer extends Person{
-    String howIsHelping;
+import Enums.ServiceType;
+import Interfaces.Helping;
 
-    public Volunteer(String name, String surname, int age, String howIsHelping) { // konstruktor
+// Klasa People.Volunteer, która dziedziczy po People.Person i przechowuje informacje o tym, w jaki sposób pomaga dany wolontariusz
+// Dodatkowo klasa implementuje interfejs Interfaces.Helping, mówiący jakie czynności pomocnicze dany wolontariusz wykonuje
+public class Volunteer extends Person implements Helping {
+    private ServiceType helpType;
+
+    public Volunteer(String name, String surname, int age, ServiceType helpType) { // konstruktor
         super(name, surname, age);
-        this.howIsHelping = howIsHelping; // moze zamiast tego jakos powiazac to z servicetype?? ehhhaaa
+        this.helpType = helpType;
     }
 
     // gettery i settery
-    public String getHowIsHelping() {
-        return howIsHelping;
+    public ServiceType getHelpType() {
+        return helpType;
     }
 
-    public void setHowIsHelping(String howIsHelping) {
-        this.howIsHelping = howIsHelping;
+    public void setHelpType(ServiceType helpType) {
+        this.helpType = helpType;
     }
 
     @Override
     public String getFullInformationAboutPerson() {
-        return getName() + " " + getSurname() + " wiek: " + getAge() + " pełniona funkcja: " + getHowIsHelping();
+        return getName() + " " + getSurname() + " wiek: " + getAge() + " pełniona funkcja: " + helpType.name();
+    }
+
+    @Override
+    public void help() {
+        System.out.println(getName() + "pomaga w: " + helpType);
     }
 }

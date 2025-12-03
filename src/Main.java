@@ -2,6 +2,7 @@ import Animals.*;
 import Enums.*;
 import People.*;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,17 +35,17 @@ public class Main {
         };
 
         Volunteer[] shelterOneVolunteers= {
-                new Volunteer("Nikola",     "Gąszczak",34,""),
-                new Volunteer("Julianna",   "Medvedieva",37,""),
-                new Volunteer("Karol ",     "Buras",56,""),
-                new Volunteer("Blanka",     "Jastrzębska",23,"")
+                new Volunteer("Nikola",     "Gąszczak",34,ServiceType.FEEDING),
+                new Volunteer("Julianna",   "Medvedieva",37,ServiceType.GROOMING),
+                new Volunteer("Karol ",     "Buras",56,ServiceType.VETERINARY_CHECKUP),
+                new Volunteer("Blanka",     "Jastrzębska",23,ServiceType.WALK_ACTIVITY)
         };
 
         Volunteer[] shelterTwoVolunteers = {
-                new Volunteer("Roman",  "Policht",34,""),
-                new Volunteer("Adrian", "Sieńko",37,""),
-                new Volunteer("Beata ", "Majcher",56,""),
-                new Volunteer("Rozalia","Łukaszuk",23,"")
+                new Volunteer("Roman",  "Policht",34,ServiceType.WALK_ACTIVITY),
+                new Volunteer("Adrian", "Sieńko",37,ServiceType.FEEDING),
+                new Volunteer("Beata ", "Majcher",56,ServiceType.GROOMING),
+                new Volunteer("Rozalia","Łukaszuk",23,ServiceType.VETERINARY_CHECKUP)
         };
 
 
@@ -491,10 +492,50 @@ public class Main {
                 break;
             }
             else {
-                System.out.println("\nPLACEHOLDER: wybrano wolontariusza: "+selectedShelter.getPersonFromTable(volunteers[chosenClient - 1].getId(), volunteers));
-                //PAT O TUTAJ TRZEBA TĄ FUNKCJĘ
-                //TUTAJ_FUNKCJA_DO_WOLONTARIUSZY_PAT(selectedShelter.getPersonFromTable(volunteers[chosenClient - 1].getId(), volunteers), selectedShelter);
-                //DOKŁADNIE TUTAJ
+                Volunteer selectedVolunteer = (Volunteer) selectedShelter.getPersonFromTable(
+                        volunteers[chosenClient - 1].getId(),
+                        volunteers
+                );
+
+                System.out.println("\nWybrano wolontariusza: " + selectedVolunteer.getFullInformationAboutPerson());
+
+                volunteerManagement(selectedVolunteer, selectedShelter);
+            }
+        }
+    }
+
+    public static void volunteerManagement(Volunteer volunteer, AnimalShelter selectedShelter) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\nWolontariusz: " + volunteer.getFullInformationAboutPerson());
+            System.out.println("1. Zmień typ pomocy.");
+            System.out.println("2. Wykonaj pomoc w ramach opieki nad zwierzęciem.");
+            System.out.println("3. Powrót.");
+
+            int choice = menuSelector(new int[]{1,2,3});
+            if (choice == 3) break;
+
+            if (choice == 1) {
+                System.out.println("Dostępne rodzaje pomocy: ");
+                System.out.println("1. FEEDING");
+                System.out.println("2. GROOMING");
+                System.out.println("3. VETERINARY_CHECKUP");
+                System.out.println("4. WALK_ACTIVITY");
+
+                System.out.println("Wybierz nową formę pomocy: ");
+                int newType = menuSelector(new int[]{1,2,3,4});
+
+                if (newType == 1) volunteer.setHelpType(ServiceType.FEEDING);
+                else if (newType == 2) volunteer.setHelpType(ServiceType.GROOMING);
+                else if (newType == 3) volunteer.setHelpType(ServiceType.VETERINARY_CHECKUP);
+                else if (newType == 4) volunteer.setHelpType(ServiceType.WALK_ACTIVITY);
+
+                System.out.println("Zmieniono forme pomocy na: " + volunteer.getHelpType());
+            }
+
+            if (choice == 2) {
+                volunteer.help();
             }
         }
     }
@@ -525,7 +566,7 @@ public class Main {
                 System.out.println("1. Wyświetl listę zwierząt w schronisku.");
                 System.out.println("2. Wyświetl listę pracowników schroniska.");
                 System.out.println("3. Wyświetl listę klientów schroniska.");
-                System.out.println("4. WIP Wyświetl listę wolontariuszy schroniska.");
+                System.out.println("4. Wyświetl listę wolontariuszy schroniska.");
                 System.out.println("5. Powrót do wyboru schroniska.");
                 System.out.print("\nWybierz funkcje którą chcesz wykonać.");
                 allowedValues = new int[]{1, 2, 3, 4, 5};
