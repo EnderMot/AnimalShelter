@@ -16,8 +16,8 @@ public class AnimalCare {
     // Wymaganie: Wykorzystanie Enum. Przechowuje typ wykonanej usługi (np. strzyżenie).
     private ServiceType serviceType;
 
-    // Przechowuje datę wykonania usługi (użycie Java Time API).
-    private LocalDate serviceDate;
+    // Przechowuje datę wykonania usługi
+    private String serviceDate;
 
     // Wymaganie: Przygotowanie do Upcastingu. Przechowuje osobę (People.Employee lub People.Volunteer),
     // która wykonała usługę, jako typ nadrzędny People.Person.
@@ -30,7 +30,7 @@ public class AnimalCare {
      * @param serviceDate Data wykonania usługi.
      * @param whoPerformed Obiekt People.Person (pracownik lub wolontariusz) wykonujący usługę.
      */
-    public AnimalCare(ServiceType serviceType, LocalDate serviceDate, Person whoPerformed) {
+    public AnimalCare(ServiceType serviceType, String serviceDate, Person whoPerformed) {
         this.serviceType = serviceType;
         this.serviceDate = serviceDate;
         this.whoPerformed = whoPerformed;
@@ -75,7 +75,7 @@ public class AnimalCare {
      * Zwraca datę wykonania usługi.
      * @return Data usługi (LocalDate).
      */
-    public LocalDate getServiceDate() {
+    public String getServiceDate() {
         return serviceDate;
     }
 
