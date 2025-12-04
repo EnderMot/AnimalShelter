@@ -6,7 +6,7 @@ import java.util.Objects;
 // Klasa implementuje interfejs Comparable - dzięki temu obiekty mogą być, np. porównywane czy sortowane
 public abstract class Person implements Comparable<Person> {
     private static int lastId; // Licznik ostatniego wygenerowanego ID - dzięki temu możliwe jest automatyczne nadawanie unikalnych id każdej osobie
-    private final int id; // Unikalny identyfikator, id osoby, automatycznie generuje id przy tworzeniu obiektu dzięki "final"
+    private int id; // Unikalny identyfikator, id osoby, automatycznie generuje id przy tworzeniu obiektu dzięki
     private String name;
     private String surname;
     private int age;

@@ -407,7 +407,7 @@ public class Main {
                 System.out.println("Klient (id: "+selectedClient.getId()+") nie adoptował żadnego zwierzęcia.");
             }
             else{
-                System.out.println("Adoptowane zwierzęta klienta (id: +"+selectedClient.getId()+"): ");
+                System.out.println("Adoptowane zwierzęta klienta (id: "+selectedClient.getId()+"): ");
                 ArrayList<Animal> animals = selectedClient.getAdoptedAnimals();
                 for (int i =0; i<animals.size(); i++){
                     Animal animal = animals.get(i);
@@ -537,7 +537,7 @@ public class Main {
             }
         }
     }
-
+    //endregion [Category: CzwartaFunkcjaUI]
 
     public static void mainLoop(AnimalShelter[] shelters){
         while (true) {

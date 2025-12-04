@@ -17,7 +17,7 @@ public abstract class Animal implements Comparable<Animal>{
     private static int lastId;
 
     //Pole typu final, nie może zostać nigdy zmienione, jest to unikalne ID przypisane do obiektu klasy Animals.Animal
-    private final int id;
+    private int id;
 
     //Pole age, zawiera wiek zwierzęcia
     private int age;
@@ -100,6 +100,7 @@ public abstract class Animal implements Comparable<Animal>{
 
     //Metoda ustawiająca zmienne adoptedBy oraz dateOfAdoption na null, ustawienie ich na null oznacza że zwierzę zostało oddane do schorniska
     public void returnToShelter(){
+        this.adoptedBy.getAdoptedAnimals().remove(this);
         this.adoptedBy = null;
         this.dateOfAdoption = null;
     }
