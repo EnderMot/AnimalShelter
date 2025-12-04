@@ -67,10 +67,15 @@ public class Main {
                 null, null, null, null, null
         };
 
-        return new AnimalShelter[]{
+        AnimalShelter[] shelters = new AnimalShelter[]{
                 new AnimalShelter(shelterOneEmployees, shelterOneVolunteers,shelterOneAnimals),
                 new AnimalShelter(shelterTwoEmployees, shelterTwoVolunteers, shelterTwoAnimals)
         };
+
+        shelters[0].addClient(new Client("Boguś", "Boguszewski", 19));
+        shelters[1].addClient(new Client("Doguś", "Doguszewski", 91));
+
+        return shelters;
     }
 
     public static int menuSelector(int[] allowedValues){
@@ -245,7 +250,7 @@ public class Main {
                 selectedShelter.addAnimal(newAnimal);
             }
             catch (ShelterFullException e){
-                System.out.println("\nSchronisko jest pełne, nie można dodać więcej zwierzaków.\n");
+                System.out.println("\n"+e.getMessage()+"\n");
             }
         else
             System.out.println("Nie można dodać zwierzaka");
@@ -253,8 +258,10 @@ public class Main {
 
     public static void functionOne(AnimalShelter selectedShelter){
         while (true) {
+            System.out.println("Lista zwierząt: ");
             Animal[] animals = selectedShelter.getAnimals();
             Arrays.sort(animals, new Animal.AnimalIdComparator());
+            Arrays.sort(animals);
             int animalCount = 0;
             for (Animal animal : animals){
                 if (animal!=null){
@@ -345,7 +352,6 @@ public class Main {
     }
 
     public static void employeeManagement(Employee employee) {
-
         while (true) {
             System.out.println("\n\nPracownik: " + employee);
             System.out.println("\nZarządzanie pracownikiem:");
@@ -508,7 +514,7 @@ public class Main {
         while (true) {
             System.out.println("\nWolontariusz: " + volunteer.getFullInformationAboutPerson());
             System.out.println("1. Zmień typ pomocy.");
-            System.out.println("2. Wykonaj pomoc w ramach opieki nad zwierzęciem.");
+            System.out.println("2. Sprawdź czym zajmuje się wybrany wolontariusz.");
             System.out.println("3. Powrót.");
 
             int choice = menuSelector(new int[]{1,2,3});
@@ -545,6 +551,7 @@ public class Main {
             System.out.println("Witamy w systemie zarzadzania schroniskiem.");
             System.out.println();
             System.out.println("Dostepne schroniska:");
+
 
             int[] allowedValues = new int[shelters.length];
             for (int i = 0; i < shelters.length; i++) {

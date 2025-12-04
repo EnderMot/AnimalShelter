@@ -4,7 +4,7 @@ import java.util.Objects;
 
 // Abstrakcyjna klasa bazowa People.Person reprezentująca osobę w systemie schroniska
 // Klasa implementuje interfejs Comparable - dzięki temu obiekty mogą być, np. porównywane czy sortowane
-public abstract class Person implements Comparable<Person> {
+public abstract class Person{
     private static int lastId; // Licznik ostatniego wygenerowanego ID - dzięki temu możliwe jest automatyczne nadawanie unikalnych id każdej osobie
     private int id; // Unikalny identyfikator, id osoby, automatycznie generuje id przy tworzeniu obiektu dzięki
     private String name;
@@ -67,14 +67,6 @@ public abstract class Person implements Comparable<Person> {
     @Override
     public int hashCode() {
         return Objects.hashCode(id); // dzięki temu przy testowaniu zwracane są dwa różne numery, ponieważ tworzymy osoby na podstawie id - każdy dostaje unikalne id
-    }
-
-    // Metoda compareTo, która jest interfejsem wbudowanym, wybrane kryterium porówniania to "id"
-    // Zamiast samodzielnie pisać logikę metody - wykorzystana została logika tej metody na typie Integer (klasy opakowującej dla typu int, która posiada różne metody "wbudowane")
-    // Klasa Integer implementuje interfejs Comparable i w tej implementacji jest zawarta logika zwracania wartości -1 0 i 1 -> a < b = -1, a > b = 1, a = b = 0
-    @Override
-    public int compareTo(Person otherPerson) {
-        return ((Integer)(id)).compareTo(otherPerson.id);
     }
 
     // metoda abstrakcujna do wyświetlania informacji o osobie

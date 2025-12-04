@@ -29,6 +29,6 @@ public class Volunteer extends Person implements Helping {
 
     @Override
     public void help() {
-        System.out.println(getName() + "pomaga w: " + helpType);
+        System.out.println(getName() + " zajmuje się: " + helpType);
     }
 }

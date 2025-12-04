@@ -16,7 +16,7 @@ public abstract class Animal implements Comparable<Animal>{
     //Pole statyczne, zawierające ostatnie ID które zostało przypisane do ostatniego stworzonego obiektu klasy Animals.Animal
     private static int lastId;
 
-    //Pole typu final, nie może zostać nigdy zmienione, jest to unikalne ID przypisane do obiektu klasy Animals.Animal
+    //Pole typu int, jest to unikalne ID przypisane do obiektu klasy Animals.Animal
     private int id;
 
     //Pole age, zawiera wiek zwierzęcia
@@ -52,20 +52,8 @@ public abstract class Animal implements Comparable<Animal>{
     public abstract int calculateAgeInHumanYears();
 
 //Gettery i settery pól klasy
-    public int getId() {
-        return id;
-    }
-
     public int getAge() {
         return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
@@ -79,10 +67,6 @@ public abstract class Animal implements Comparable<Animal>{
 
     public Traits getTrait() {
         return trait;
-    }
-
-    public void setTrait(Traits trait) {
-        this.trait = trait;
     }
 
     //Metoda dodająca podane imię do historii imion o ile dane imie nie jest w niej obecne
@@ -118,7 +102,6 @@ public abstract class Animal implements Comparable<Animal>{
         return dateOfAdoption;
     }
 
-
     @Override
     public int compareTo(Animal otherAnimal) {
         return ((Integer)(id)).compareTo(otherAnimal.id);
@@ -134,6 +117,6 @@ public abstract class Animal implements Comparable<Animal>{
 
     @Override
     public String toString() {
-        return this.name +" wiek: "+this.age+" id: "+this.id;
+        return this.name +" | wiek: "+this.age+" | id: "+this.id;
     }
 }

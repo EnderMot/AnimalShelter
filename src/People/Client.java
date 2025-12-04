@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 // Klasa People.Client, która dziedziczy po People.Person i przechowuje listę zaadoptowanych zwierząt
 public class Client extends Person{
-    ArrayList<Animal> adoptedAnimals = new ArrayList<>();
+    private ArrayList<Animal> adoptedAnimals = new ArrayList<>();
 
     public Client(String name, String surname, int age) { // konstruktor, który tworzy nowy obiekt i pozwala na ustawienie jego wartości początkowych
         super(name, surname, age);

@@ -1,8 +1,6 @@
 package Animals;
 import Enums.Traits;
 
-import java.util.Objects;
-
 /**
  * Klasa Animals.Fox dziedzicząca po Animals.Animal
  */

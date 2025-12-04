@@ -31,10 +31,6 @@ public class AnimalShelter {
     // Licznik przechowujący aktualną liczbę zwierząt. Potrzebny do zarządzania tablicą (indeksowanie).
     private int animalCount = 0;
 
-    // Wymaganie: Pole statyczne (jedno z dwóch). Liczy całkowitą liczbę zwierząt,
-    // które kiedykolwiek trafiły do systemu (globalna statystyka).
-    private static int totalAnimalsFound = 0;
-
     AnimalShelter(Employee[] employees, Volunteer[] volunteers, Animal[] animals){
         this.employees = employees;
         this.volunteers = volunteers;
@@ -44,7 +40,6 @@ public class AnimalShelter {
                 animalCount++;
             }
         }
-        totalAnimalsFound=animalCount;
     }
 
 
@@ -58,20 +53,9 @@ public class AnimalShelter {
         try{
             // Przypisanie obiektu (np. Dog) do tablicy Animal[] - jest to Upcasting.
             this.animals[animalCount++] = newAnimal;
-
-            // Aktualizacja pola statycznego
-            totalAnimalsFound++;
         } catch (IndexOutOfBoundsException exception) {
             throw new ShelterFullException("Schronisko jest pełne! Nie można przyjąć zwierząt.");
         }
-    }
-
-    /**
-     * Wymaganie: Metoda statyczna. Zwraca całkowitą liczbę zwierząt, które trafiły do systemu.
-     * @return Globalna liczba znalezionych zwierząt.
-     */
-    public static int getTotalAnimalsFound() {
-        return totalAnimalsFound;
     }
 
     // GETTERY
@@ -81,13 +65,6 @@ public class AnimalShelter {
      */
     public Animal[] getAnimals() {
         return animals;
-    }
-
-    /**
-     * Zwraca aktualną liczbę zwierząt w schronisku.
-     */
-    public int getAnimalCount() {
-        return animalCount;
     }
 
 
