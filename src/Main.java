@@ -581,15 +581,21 @@ public class Main {
             System.out.println("Dostepne schroniska:");
 
 
-            int[] allowedValues = new int[shelters.length];
+            int[] allowedValues = new int[shelters.length+1];
             for (int i = 0; i < shelters.length; i++) {
                 System.out.println((i + 1) + ". Schronisko nr " + (i + 1));
                 allowedValues[i] = i + 1;
             }
+            System.out.println((shelters.length+1)+". Zakończenie działania programu.");
+            allowedValues[shelters.length] = shelters.length+1;
             System.out.println("Proszę wybierz schronisko którym chcesz zarządzać.");
             System.out.print("Podaj właściwy numer z zakresu od " + allowedValues[0] + " do " + allowedValues[allowedValues.length - 1] + " : ");
-            AnimalShelter selectedShelter = shelters[menuSelector(allowedValues) - 1];
-
+            int chosenValue = menuSelector(allowedValues);
+            if (chosenValue == allowedValues[allowedValues.length-1]){
+                System.out.println("\n\nZAKOŃCZENIE DZIAŁANIA PROGRAMU... WYŁACZANIE");
+                break;
+            }
+            AnimalShelter selectedShelter = shelters[chosenValue-1];
             System.out.println("Wybrano schronisko.");
             System.out.println("Otwieram panel zarządzania.");
             System.out.println("\n");
