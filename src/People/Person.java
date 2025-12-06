@@ -22,30 +22,18 @@ public abstract class Person{
 // Poniżej gettery i settery
     public int getId() {
         return id;
-    } // w ramach id jest tylko getter - do odczytu, poniewaz id jest final
+    }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     public int getAge() {
         return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     // Metoda toString - zwraca tekstową reprezentację obiektu w postaci ciągu znaków, nadpisanie jej pozwala na uniknięcie błędów wynikających z, np. literówek
@@ -60,13 +48,15 @@ public abstract class Person{
         if (this == o) return true; // jeśli nasz obiekt posiada taki sam adres w pamięci, co obiekt "o" - są sobie równe
         if (o == null || getClass() != o.getClass()) return false; // jeśli obiekt "o" jest nullem lub metoda getClass naszego obiektu nie zwraca tego co wywołana na obiekcie "o" - obiekty nie są równe
         Person person = (Person) o;
-        return id == person.id; // najważniejsza zmienna tutaj to id, ponieważ jest ono niepowtarzalne
+        return age == person.age
+                && name.equals(person.name)
+                && surname.equals(person.surname); // najważniejsza zmienna tutaj to id, ponieważ jest ono niepowtarzalne
     }
 
     // Metoda hashCode() do zwracania wartości skrótu (hasza) obiektu, który jest liczbą całkowitą i identyfikatorem dla obiektu w ramach haszowania w HashMap i HashSet
     @Override
     public int hashCode() {
-        return Objects.hashCode(id); // dzięki temu przy testowaniu zwracane są dwa różne numery, ponieważ tworzymy osoby na podstawie id - każdy dostaje unikalne id
+        return Objects.hash(name, surname, age); // dzięki temu przy testowaniu zwracane są dwa różne numery, ponieważ tworzymy osoby na podstawie id - każdy dostaje unikalne id
     }
 
     // metoda abstrakcujna do wyświetlania informacji o osobie

@@ -3,11 +3,7 @@ import Enums.*;
 import People.*;
 
 import java.awt.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void startProgram(){
@@ -89,6 +85,7 @@ public class Main {
             } catch (InputMismatchException e) {
                 System.out.println("Błąd systemu, została podana wartość tekstowa zamiast liczbowej.");
                 System.out.print("Podaj właściwy numer z zakresu od "+allowedValues[0]+" do "+allowedValues[allowedValues.length-1]+" : ");
+                provided = 0;
             }
         }
         boolean contains = false;
@@ -131,14 +128,26 @@ public class Main {
                 age = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Błąd systemu, została podana wartość tekstowa zamiast liczbowej.");
+                age = 0;
             }
         }
         System.out.println();
         Client adopter = new Client(name,surname,age);
-        selectedAnimal.adoption(adopter, LocalDate.now());
-        adopter.addAdoptedAnimal(selectedAnimal);
-        selectedShelter.addClient(adopter);
 
+        ArrayList<Client> clients = selectedShelter.getClients();
+        boolean adopterIsClient = false;
+        for (Client client : clients){
+            if (client.equals(adopter) && client.hashCode() == adopter.hashCode()){
+                adopter = client;
+                adopterIsClient = true;
+            }
+        }
+        Random random = new Random();
+        selectedAnimal.adoption(adopter, ((random.nextInt(31)+1)+"."+(random.nextInt(12)+1)+".2025"));
+        adopter.addAdoptedAnimal(selectedAnimal);
+        if (!adopterIsClient){
+            selectedShelter.addClient(adopter);
+        }
 
         System.out.println("Zwierzę adoptowane przez "+adopter.getName()+" "+adopter.getSurname());
     }
@@ -175,6 +184,7 @@ public class Main {
                 System.out.println("2. Zmień imię.");
                 System.out.println("3. Powrót do listy zwierząt.");
             }
+            System.out.println("Wybierz numer funkcji, którą chcesz wykonać:");
 
             int functionChoice = menuSelector(allowedValues);
             if (functionChoice == allowedValues[allowedValues.length-1]){
@@ -211,6 +221,7 @@ public class Main {
                 age = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Błąd systemu, została podana wartość tekstowa zamiast liczbowej.");
+                age = 0;
             }
         }
         System.out.println("Podaj cechę charakteru zwierzaka. ");
@@ -249,7 +260,7 @@ public class Main {
             try {
                 selectedShelter.addAnimal(newAnimal);
             }
-            catch (ShelterFullException e){
+            catch (Exception e){
                 System.out.println("\n"+e.getMessage()+"\n");
             }
         else
@@ -259,7 +270,11 @@ public class Main {
     public static void functionOne(AnimalShelter selectedShelter){
         while (true) {
             System.out.println("Lista zwierząt: ");
-            Animal[] animals = selectedShelter.getAnimals();
+            Animal[] animals = new Animal[selectedShelter.getAnimalCount()];
+            for (int i =0; i<selectedShelter.getAnimalCount(); i++){
+                Animal animal = selectedShelter.getAnimals()[i];
+                if (animal!=null) animals[i] = animal;
+            }
             Arrays.sort(animals, new Animal.AnimalIdComparator());
             Arrays.sort(animals);
             int animalCount = 0;
@@ -324,7 +339,7 @@ public class Main {
             for (int i = 0; i < employees.length; i++) {
                 Employee e = employees[i];
                 if (e != null) {
-                    System.out.println((i + 1) + ". " + e);
+                    System.out.println((i + 1) + ". " + e.getName() + " "+e.getSurname()+" | Stanowisko: "+e.getJobs()+" | Pensja: "+e.getSalary());
                     allowedValues[i] = i + 1;
                 }
             }
@@ -361,12 +376,11 @@ public class Main {
             System.out.println("1. Zmień stanowisko.");
             System.out.println("2. Zmień pensję.");
             System.out.println("3. Powrót do listy pracowników.");
+            System.out.println("Wybierz numer funkcji, którą chcesz wykonać:");
 
             int choice = menuSelector(allowedValues);
 
             if (choice == 3) break;
-
-            Scanner scanner = new Scanner(System.in);
 
             if (choice == 1) {
                 Jobs[] allJobs = Jobs.values(); // dostępne stanowiska w enum - Jobs
@@ -389,13 +403,23 @@ public class Main {
             }
 
             if (choice == 2) {
-                System.out.print("Podaj nową pensję: ");
-                try {
-                    double newSalary = scanner.nextDouble();
-                    employee.setSalary(newSalary);
-                    System.out.println("Zmieniono pensję.");
-                } catch (Exception e) {
-                    System.out.println("Błąd, podano tekst zamiast liczby.");
+                double newSalary = -1;
+                while (newSalary<=0){
+                    Scanner scanner = new Scanner(System.in);
+                    newSalary = -1;
+                    System.out.print("Podaj nową pensję: ");
+                    try {
+                        newSalary = scanner.nextDouble();
+                        if (newSalary>0){
+                            employee.setSalary(newSalary);
+                            System.out.println("Zmieniono pensję.");
+                            break;
+                        }
+                        System.out.println("Pensja nie może być mniejsza od zera.");
+                        newSalary = -1;
+                    } catch (Exception e) {
+                        System.out.println("Błąd, podano tekst zamiast liczby.");
+                    }
                 }
             }
         }
@@ -422,12 +446,14 @@ public class Main {
                     else if (animal instanceof Dog) species = "Pies";
                     else if (animal instanceof Hamster) species = "Chomik";
                     else if (animal instanceof Fox) species = "Lis";
-                    System.out.println(i+". "+species + ": " + animal);
+                    System.out.println((i+1)+". "+species + ": " + animal);
                 }
             }
 
             System.out.println("\nFunkcje zarządzania klientem:");
             System.out.println("1. Powrót do listy klientów.");
+            System.out.println("Wybierz numer funkcji, którą chcesz wykonać:");
+
             int[] allowedValues = {1};
             int functionChoice = menuSelector(allowedValues);
             if (functionChoice == 1){
@@ -515,7 +541,9 @@ public class Main {
             System.out.println("\nWolontariusz: " + volunteer.getFullInformationAboutPerson());
             System.out.println("1. Zmień typ pomocy.");
             System.out.println("2. Sprawdź czym zajmuje się wybrany wolontariusz.");
-            System.out.println("3. Powrót.");
+            System.out.println("3. Powrót do listy wolontariuszy.");
+            System.out.println("Wybierz numer funkcji, którą chcesz wykonać:");
+
 
             int choice = menuSelector(new int[]{1,2,3});
             if (choice == 3) break;

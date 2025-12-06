@@ -1,6 +1,5 @@
 package Animals;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -33,7 +32,7 @@ public abstract class Animal implements Comparable<Animal>{
 
     //Pole adoptedBy, zawiera informację przez kogo jest adoptowane dane zwierze
     private Client adoptedBy;
-    private LocalDate dateOfAdoption;
+    private String dateOfAdoption;
 
 
     /**
@@ -77,7 +76,7 @@ public abstract class Animal implements Comparable<Animal>{
     }
 
     //Metoda ustawiająca zmienne adoptedBy oraz dateOfAdoption, ustawienie ich oznacza że zwierzę zostało zaadoptowane
-    public void adoption(Client client, LocalDate date){
+    public void adoption(Client client, String date){
         this.adoptedBy = client;
         this.dateOfAdoption = date;
     }
@@ -98,7 +97,7 @@ public abstract class Animal implements Comparable<Animal>{
         return adoptedBy;
     }
 
-    public LocalDate getDateOfAdoption(){
+    public String getDateOfAdoption(){
         return dateOfAdoption;
     }
 

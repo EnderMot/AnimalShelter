@@ -52,10 +52,11 @@ public class AnimalShelter {
     public void addAnimal(Animal newAnimal) throws ShelterFullException {
         try{
             // Przypisanie obiektu (np. Dog) do tablicy Animal[] - jest to Upcasting.
-            this.animals[animalCount++] = newAnimal;
+            this.animals[animalCount] = newAnimal;
         } catch (IndexOutOfBoundsException exception) {
             throw new ShelterFullException("Schronisko jest pełne! Nie można przyjąć zwierząt.");
         }
+        animalCount++;
     }
 
     // GETTERY
@@ -67,11 +68,9 @@ public class AnimalShelter {
         return animals;
     }
 
-
-    // ... (Gettery dla employees i volunteers powinny być dodane dla kompletności hermetyzacji) ...
-    // Dodajmy tutaj metody pozwalające pobrać/działać z pracownikami, wolontariuszami i klientami schroniska
-
-    //Dodałem poniższe metody - Tomek
+    public int getAnimalCount(){
+        return animalCount;
+    }
 
     public Employee[] getEmployees(){
         return employees;
