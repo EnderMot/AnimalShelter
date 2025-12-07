@@ -75,7 +75,7 @@ public class Main {
     }
 
     public static int menuSelector(int[] allowedValues){
-        int provided;
+        int provided; // zmienna, w której przetrzymujemy wybór użytkownika
 
         while (true) {
             Scanner scanner = new Scanner(System.in);
@@ -89,7 +89,7 @@ public class Main {
             }
         }
         boolean contains = false;
-        while (!contains){
+        while (!contains){ // !contains -> contains == false -> true
             Scanner scanner = new Scanner(System.in);
             for (int value : allowedValues){
                 if (value == provided) {
@@ -518,13 +518,13 @@ public class Main {
             allowedValues[volunteerCount] = volunteerCount + 1;
             System.out.println("Wybierz numer wolontariusza którym chcesz zrządzać.");
             System.out.print("Podaj właściwy numer z zakresu od " + allowedValues[0] + " do " + allowedValues[allowedValues.length - 1] + " : ");
-            int chosenClient = menuSelector(allowedValues);
-            if (chosenClient == allowedValues[allowedValues.length-1]) {
+            int chosenVolunteer = menuSelector(allowedValues);
+            if (chosenVolunteer == allowedValues[allowedValues.length-1]) {
                 break;
             }
             else {
                 Volunteer selectedVolunteer = (Volunteer) selectedShelter.getPersonFromTable(
-                        volunteers[chosenClient - 1].getId(),
+                        volunteers[chosenVolunteer - 1].getId(),
                         volunteers
                 );
 
@@ -608,7 +608,7 @@ public class Main {
                 System.out.println("4. Wyświetl listę wolontariuszy schroniska.");
                 System.out.println("5. Powrót do wyboru schroniska.");
                 System.out.print("\nWybierz funkcje którą chcesz wykonać.");
-                allowedValues = new int[]{1, 2, 3, 4, 5};
+                allowedValues = new int[]{1, 2, 3, 4, 5}; // nadpisanie tablicy allowedValues
                 System.out.print("Podaj właściwy numer z zakresu od " + allowedValues[0] + " do " + allowedValues[allowedValues.length - 1] + " : ");
                 int chosenFunction = menuSelector(allowedValues);
 

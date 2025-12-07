@@ -27,6 +27,7 @@ public class Volunteer extends Person implements Helping {
         return getName() + " " + getSurname() + " wiek: " + getAge() + " pełniona funkcja: " + helpType.name();
     }
 
+    // Implementacja metody z interfejsu Helping
     @Override
     public void help() {
         System.out.println(getName() + " zajmuje się: " + helpType);

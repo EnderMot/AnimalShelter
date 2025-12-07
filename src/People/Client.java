@@ -3,7 +3,7 @@ import Animals.Animal;
 
 import java.util.ArrayList;
 
-// Klasa People.Client, która dziedziczy po People.Person i przechowuje listę zaadoptowanych zwierząt
+// Klasa Client, która dziedziczy po Person i przechowuje listę zaadoptowanych zwierząt
 public class Client extends Person{
     private ArrayList<Animal> adoptedAnimals = new ArrayList<>();
 
@@ -25,5 +25,3 @@ public class Client extends Person{
         return getName() + " " + getSurname() + " wiek: " + getAge() + " adoptowane zwierzęta: " + adoptedAnimals.size();
     }
 }
-
-// zrobić metodę Adoption tutaj i potem dodać powiązanie do klasy Animals.Animal "adoptedBy"

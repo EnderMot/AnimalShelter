@@ -101,11 +101,13 @@ public abstract class Animal implements Comparable<Animal>{
         return dateOfAdoption;
     }
 
+    // Implementacja intefejsu Comparable
     @Override
     public int compareTo(Animal otherAnimal) {
         return ((Integer)(id)).compareTo(otherAnimal.id);
     }
 
+    // Implementacja intefejsu Comparator
     public static class AnimalIdComparator implements Comparator<Animal>{
         @Override
         public int compare(Animal animal1, Animal animal2) {

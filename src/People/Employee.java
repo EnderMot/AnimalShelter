@@ -2,7 +2,7 @@ package People;
 
 import Enums.Jobs;
 
-// Klasa People.Employee, dziedzicząca po People.Person, która dodatkowo przechowuje informacje o salary
+// Klasa Employee, dziedzicząca po Person, która dodatkowo przechowuje informacje o salary
 public class Employee extends Person{
     private double salary;
     private Jobs job; // odniesienie do enuma Jobs

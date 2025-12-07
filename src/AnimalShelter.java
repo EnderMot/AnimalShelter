@@ -13,7 +13,6 @@ import java.util.ArrayList;
 public class AnimalShelter {
 
     // POLA KLASY (Wymaganie: Hermetyzacja - wszystkie są prywatne)
-    // Oraz ustalenie maksymalnych rozmiarów tablic zgodnie z projektem
 
     // Wymaganie: Tablica 1/3. Przechowuje zwierzęta w schronisku.
     // Daje możliwość Upcastingu (np. Animals.Dog, Animals.Cat są przechowywane jako Animals.Animal).
@@ -89,7 +88,7 @@ public class AnimalShelter {
         this.clients.add(c);
     }
 
-    //Metoda pobrania jednej osoby z odpowiednim id z tablicy typu Person
+    //Metoda (generyczna) pobrania jednej osoby z odpowiednim id z tablicy typu Person
     //W przypadku braku takiej osoby metoda zwaraca null
     public <T extends Person> Person getPersonFromTable(int personId, T[] personTable){
         for (T person : personTable) {

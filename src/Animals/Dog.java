@@ -20,6 +20,6 @@ public class Dog extends Animal{
      * */
     @Override
     public int calculateAgeInHumanYears() {
-        return (int) (16*Math.log(getAge())+31);
+        return (int) (16*(getAge())+31);
     }
 }
